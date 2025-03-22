@@ -1,4 +1,5 @@
 import Bottombar from '@/components/Bottombar'
+import Navbar from '@/components/ui/Navbar'
 import Sidebar from '@/components/ui/Sidebar'
 import React, { ReactNode } from 'react'
 
@@ -6,7 +7,7 @@ function HomeLayout({children}:{children:ReactNode}) {
   return (
     <>
       <main className='relative'>
-          Navbar
+          <Navbar/>
           <div className='flex'>
               <Sidebar/>
               
