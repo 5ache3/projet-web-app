@@ -1,4 +1,4 @@
-import Bottombar from '@/components/Bottombar'
+import Bottombar from '@/components/ui/Bottombar'
 import Navbar from '@/components/ui/Navbar'
 import Sidebar from '@/components/ui/Sidebar'
 import React, { ReactNode } from 'react'

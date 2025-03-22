@@ -131,6 +131,12 @@
   @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
 }
 
+.cl-providerIcon__github{
+  filter: invert(1);
+}
+.cl-userButtonPopoverActionButton{
+  color: #fff;
+}
 @layer base {
   * {
     @apply border-border outline-ring/50;
