@@ -140,7 +140,19 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-
+.card-1{
+  background-color: #16FEE3;
+}
+.card-2{
+  background-color: #FEFE13;
+}
+.card-3{
+  background-color: #DE12E3;
+}
+.card-4{
+  background-color: #DE5E3E;
+  /* background-color: #16FEE3; */
+}
 .cl-providerIcon__github{
   filter: invert(1);
 }

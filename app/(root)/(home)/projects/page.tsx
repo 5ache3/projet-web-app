@@ -7,25 +7,25 @@ export default function page() {
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
                 <ProjectCard 
                 title='Projet Web'
-                color='bg-yellow-300'
+                color='card-1'
                 total={12}
                 completed={3}
                 />
                 <ProjectCard 
                 title='Next JS'
-                color='bg-blue-300'
+                color='card-4'
                 total={7}
                 completed={6}
                 />
                 <ProjectCard 
                 title='prog mobile'
-                color='bg-blue-400'
+                color='card-2'
                 total={8}
                 completed={6}
                 />
                 <ProjectCard 
                 title='Next JS'
-                color='bg-blue-300'
+                color='card-3'
                 total={12}
                 completed={9}
                 />
