@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ClerkProvider
+      <ClerkProvider 
         appearance={{
           layout:{
             logoImageUrl:'assets/logo.svg',
