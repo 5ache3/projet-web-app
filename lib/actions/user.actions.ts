@@ -12,6 +12,7 @@ export async function createUser({data}:{data:User}) {
         console.log(error)
     }
 }
+
 export async function deleteUser({id}:{id:string}) {
     try{
         const user=await prisma.user.delete({
@@ -22,6 +23,7 @@ export async function deleteUser({id}:{id:string}) {
         console.log(error)
     }
 }
+
 export async function updateUser(id:string,data:Partial<User>) {
     try{
         const user=await prisma.user.update({
