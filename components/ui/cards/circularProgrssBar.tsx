@@ -15,7 +15,7 @@ const CircularProgressCard: React.FC<CircularProgressProps> = ({nb_tasks,complet
   const progress = (value / 100) * circumference;
 
   return (
-    <div className="flex flex-col justify-around w-full items-center p-6  shadow-lg rounded-2xl">
+    <div className="flex flex-col justify-around w-full items-center p-6  shadow-lg glassmorphism-1 rounded-2xl">
       <div className="relative w-24 h-24">
         {/* Background Circle */}
         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">

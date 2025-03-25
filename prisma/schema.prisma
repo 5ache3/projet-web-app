@@ -8,17 +8,61 @@ datasource db {
 }
 
 model User {
-  id          String @id @default(uuid()) // Auto-generated ID
-  name        String
-  username    String  @unique
-  email       String  @unique
-  image_url   String?
+  id        String  @id @default(uuid()) 
+  name      String
+  username  String  @unique
+  email     String  @unique
+  image_url String?
+
+  projects  User_Project[]
+  tasks     User_Task[]
+  ownedProjects Projet[] @relation("Owner")
 }
 
-model Projet{
-  id String  @id @default(uuid())
-  title String
-  mamager String
-  deadline DateTime
-  
+model Projet {
+  id          String  @id @default(uuid())
+  title       String
+  owner_id    String  @unique @map("ownerId")
+  created_at  DateTime @default(now())
+  description String?  @db.Text
+  deadline    DateTime?
+
+  owner       User  @relation("Owner", fields: [owner_id], references: [id], onDelete: Cascade)
+  tasks       Task[]
+  users       User_Project[]
+}
+
+model Task {
+  id          String  @id @default(uuid())
+  title       String
+  project_id  String  @map("projectId")
+  description String? @db.Text
+  created_at  DateTime @default(now())
+  completed   Boolean @default(false)
+
+  project     Projet @relation(fields: [project_id], references: [id], onDelete: Cascade)
+  users       User_Task[]
+}
+
+model User_Project {
+  id         String  @id @default(uuid())
+  user_id    String
+  project_id String
+  role       String  
+
+  user       User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  project    Projet @relation(fields: [project_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, project_id]) // Ensures a user can join a project only once
+}
+
+model User_Task {
+  id      String  @id @default(uuid())
+  user_id String
+  task_id String
+
+  user    User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  task    Task @relation(fields: [task_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, task_id]) // Ensures a user is assigned to a task only once
 }

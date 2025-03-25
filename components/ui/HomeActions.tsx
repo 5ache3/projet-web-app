@@ -7,12 +7,12 @@ export default function HomeActions() {
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
           <Card 
           title='Create project'
-          color='bg-yellow-300'
+          color='card-2'
           img_url='/icons/add.svg'
           />
           <Card 
           title='Join Project'
-          color='bg-blue-300'
+          color='card-1'
           img_url='/assets/search.svg'
           />
       </div>

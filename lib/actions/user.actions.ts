@@ -1,20 +1,32 @@
 import { use } from 'react'
 import prisma from '../prisma'
-interface UserType {
-    id: string;
-    name: string;
-    username: string|null;
-    email: string|null;
-    image_url: string;
-  }
-  
+import {User} from '@prisma/client'
 
-export async function createUser({data}:{data:UserType}) {
+
+export async function createUser({data}:{data:User}) {
     try{
-        console.log(data)
         const user=await prisma.user.create({data})
-        console.log(user);
         
+        return user
+    }catch(error){
+        console.log(error)
+    }
+}
+export async function deleteUser({id}:{id:string}) {
+    try{
+        const user=await prisma.user.delete({
+            where:{id}
+        })
+        return user
+    }catch(error){
+        console.log(error)
+    }
+}
+export async function updateUser(id:string,data:Partial<User>) {
+    try{
+        const user=await prisma.user.update({
+            where:{id},data
+        })
         return user
     }catch(error){
         console.log(error)

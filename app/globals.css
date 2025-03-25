@@ -135,22 +135,29 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
+.glassmorphism-1 {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
 .glassmorphism2 {
   background: rgba(18, 17, 17, 0.25);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 .card-1{
-  background-color: #16FEE3;
+  background-color: #3642eb;
+ 
 }
 .card-2{
-  background-color: #FEFE13;
+  background-color: #e6d711;
+  
 }
 .card-3{
-  background-color: #DE12E3;
+  background-color: #c40bc7;
 }
 .card-4{
-  background-color: #DE5E3E;
+  background-color: #d4431f;
   /* background-color: #16FEE3; */
 }
 .cl-providerIcon__github{
