@@ -1,10 +1,10 @@
 
 'use client'
 import{ useEffect, useState } from 'react'
-import { Dialog, DialogContent, DialogTitle } from '../dialog'
-import {Calendar} from '../calendar'
-import { CalendarForm } from '../forms/calendarForm'
-import { Button } from '../button'
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
+import {Calendar} from '../ui/calendar'
+import { CalendarForm } from '../ui/forms/calendarForm'
+import { Button } from '../ui/button'
 import { useUser } from '@clerk/nextjs'
 import { toast } from 'sonner'
 interface promps{

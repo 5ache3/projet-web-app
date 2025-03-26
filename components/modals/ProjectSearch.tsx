@@ -1,6 +1,6 @@
 
-import { Dialog, DialogContent, DialogTitle } from '../dialog'
-import { Button } from '../button'
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
+import { Button } from '../ui/button'
 import { Search } from 'lucide-react'
 interface promps{
     isOpen:boolean

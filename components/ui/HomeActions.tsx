@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
-import Card from './cards/Card'
-import ProjectCreation from './modals/ProjectCreation'
-import ProjectSearch from './modals/ProjectSearch'
+import Card from '../cards/Card'
+import ProjectCreation from '../modals/ProjectCreation'
+import ProjectSearch from '../modals/ProjectSearch'
 
 export default function HomeActions() {
   const [clicked,setClicked]=useState('')

@@ -1,4 +1,4 @@
-import ProjectCard from '@/components/ui/cards/ProjectCard'
+import ProjectCard from '@/components/cards/ProjectCard'
 import React from 'react'
 
 export default function page() {

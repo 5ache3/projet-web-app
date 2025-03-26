@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Variable } from "lucide-react";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +48,7 @@ export default function RootLayout({
       >
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-dark-1`}>
           {children}
+          <Toaster></Toaster>
         </body>
       </ClerkProvider>
     </html>

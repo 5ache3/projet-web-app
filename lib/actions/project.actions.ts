@@ -4,8 +4,17 @@ import {Projet} from '@prisma/client'
 
 export async function createProject({data}:{ data: Omit<Projet, 'id' | 'created_at'> }) {
     try{
-        const project=await prisma.projet.create({data})
-        return project
+
+        const project=await prisma.projet.create({data});
+        const relation = await prisma.user_Project.create({
+            data:{
+                project_id :project.id,
+                user_id:data.owner_id,
+                role :'creator'
+            }
+        })
+        console.log(relation)
+        return [project,relation]
     }catch(error){
         console.log(error)
     }
