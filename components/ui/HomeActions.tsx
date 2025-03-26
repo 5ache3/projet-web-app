@@ -26,6 +26,7 @@ export default function HomeActions() {
       <ProjectCreation 
       isOpen={clicked==='creation'}
       onClose={()=>{setClicked('closed')}}
+      closeDialog={()=>{setClicked('closed')}}
       />
       <ProjectSearch 
       isOpen={clicked==='joining'}

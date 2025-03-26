@@ -2,10 +2,9 @@ import prisma from '../prisma'
 import {Projet} from '@prisma/client'
 
 
-export async function createProject({data}:{data:Projet}) {
+export async function createProject({data}:{ data: Omit<Projet, 'id' | 'created_at'> }) {
     try{
         const project=await prisma.projet.create({data})
-        
         return project
     }catch(error){
         console.log(error)

@@ -26,11 +26,11 @@ import {
 
 const FormSchema = z.object({
   dob: z.date({
-    required_error: "A date of birth is required.",
+    required_error: "the date is required.",
   }),
 })
 
-export function CalendarForm() {
+export function CalendarForm({handleChange}:{handleChange:(value:Date|undefined)=>void}) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
@@ -48,7 +48,7 @@ export function CalendarForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(()=>{})} className="space-y-8">
+      <div className="space-y-8">
         <FormField
           control={form.control}
           name="dob"
@@ -78,7 +78,10 @@ export function CalendarForm() {
                   <Calendar
                     mode="single"
                     selected={field.value}
-                    onSelect={field.onChange}
+                    onSelect={(date) => {
+                                field.onChange(date); // Update form state
+                                handleChange(date); // Call your custom function
+                            }}
                     disabled={(date) =>
                       date < new Date() || date > new Date("2030-01-01")
                     }
@@ -87,13 +90,14 @@ export function CalendarForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
+                
                 chose the time where the project ends
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-      </form>
+      </div>
     </Form>
   )
 }

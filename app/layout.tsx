@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Variable } from "lucide-react";
