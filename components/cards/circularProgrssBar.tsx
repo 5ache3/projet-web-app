@@ -10,7 +10,10 @@ interface CircularProgressProps {
 const CircularProgressCard: React.FC<CircularProgressProps> = ({nb_tasks,completed_tasks }) => {
   const radius = 40; // Radius of the circle
   const strokeWidth = 4;
-  const value=Math.ceil((completed_tasks/nb_tasks)*100)
+  let value=Math.ceil((completed_tasks/nb_tasks)*100);
+  if(nb_tasks===0){
+    value=0;
+  }
   const circumference = 2 * Math.PI * radius;
   const progress = (value / 100) * circumference;
 
@@ -46,7 +49,7 @@ const CircularProgressCard: React.FC<CircularProgressProps> = ({nb_tasks,complet
           {value}%
         </div>
       </div>
-      <p className="mt-4 text-gray-600">{completed_tasks} from {nb_tasks}</p>
+      <p className="mt-4 text-gray-200">{completed_tasks} from {nb_tasks}</p>
     </div>
   );
 };

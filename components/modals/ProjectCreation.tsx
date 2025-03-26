@@ -18,8 +18,6 @@ export default function ProjectCreation({isOpen,onClose,handleClick,closeDialog}
     const [name,setName]=useState('');
     const [description,setDescription]=useState('');
     const { user } = useUser();
-    // const id = user?.id;
-    
     const id=user?.id||'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
     const onSubmit = async () => {
         closeDialog();
@@ -50,7 +48,7 @@ export default function ProjectCreation({isOpen,onClose,handleClick,closeDialog}
             
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
-              }{
+              }else{
                 setDescription('')
                 setName('')
                 setDate(undefined)

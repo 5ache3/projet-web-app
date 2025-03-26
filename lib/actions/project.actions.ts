@@ -1,20 +1,22 @@
 import prisma from '../prisma'
 import {Projet} from '@prisma/client'
 
-
-export async function createProject({data}:{ data: Omit<Projet, 'id' | 'created_at'> }) {
-    try{
-
-        const project=await prisma.projet.create({data});
-        const relation = await prisma.user_Project.create({
+type id_p={
+    project_id:string
+}
+export async function createRelation(u_id:string,p_id:string){
+    const relation = await prisma.user_Project.create({
             data:{
-                project_id :project.id,
-                user_id:data.owner_id,
+                project_id :p_id,
+                user_id:u_id,
                 role :'creator'
             }
         })
-        console.log(relation)
-        return [project,relation]
+}
+export async function createProject({data}:{ data: Omit<Projet, 'id' | 'created_at'> }) {
+    try{
+        const project=await prisma.projet.create({data});
+        return project
     }catch(error){
         console.log(error)
     }
@@ -42,7 +44,30 @@ export async function getProject({id}:{id:string}) {
             where: {project_id:id,completed:true}
         })
 
-        return {p:project,t:count_tot,c:count_comp}
+        return {p:project,t:count_tot.length,c:count_comp.length}
+    }catch(error){
+        console.log(error)
+    }
+}
+
+async function GetProjects(list:id_p[]) {
+    const projects = [];
+  
+    for (let i = 0; i < list.length; i++) {
+        const projet = await getProject({ id: list[i].project_id });
+        projects.push(projet);
+    }
+  
+    return projects;
+}
+
+export async function GetListProjects(user_id:string) {
+    try{
+        const list=await prisma.user_Project.findMany({
+            where:{user_id},
+            select:{project_id:true}
+        })
+        return GetProjects(list)
     }catch(error){
         console.log(error)
     }

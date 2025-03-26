@@ -1,6 +1,6 @@
-import Bottombar from '@/components/ui/Bottombar'
-import Navbar from '@/components/ui/Navbar'
-import Sidebar from '@/components/ui/Sidebar'
+import Bottombar from '@/components/reusable/Bottombar'
+import Navbar from '@/components/reusable/Navbar'
+import Sidebar from '@/components/reusable/Sidebar'
 import React, { ReactNode } from 'react'
 
 function HomeLayout({children}:{children:ReactNode}) {

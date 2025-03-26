@@ -1,16 +1,62 @@
+'use client'
 import ProjectCard from '@/components/cards/ProjectCard'
-import React from 'react'
-
+import { GetListProjects } from '@/lib/actions/project.actions'
+import { useUser } from '@clerk/nextjs';
+import React, { useEffect, useState } from 'react'
+type project={
+  p:{
+    id:string
+    title:string
+    owner_id:string
+    created_at:Date
+    description:string
+    deadline:Date
+  }
+  t:number
+  c:number
+}
 export default function page() {
+    const { user } = useUser();
+    const [listProjects, setListProjects] = useState<project[]>([]); // Assuming list_projects is an array of strings.
+    const cards=['card-1','card-2','card-3','card-4',]
+    const id = user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
+
+    // Fetch projects when the component is mounted
+    useEffect(() => {
+      const fetchProjects = async () => {
+        try {
+          const data = await fetch(`/api/user/${id}/projects`);
+          const projects = await data?.json()
+          console.log(projects);
+          setListProjects(projects);
+        } catch (error) {
+          console.error("Error fetching projects:", error);
+        }
+      };
+      fetchProjects();
+    }, [id]);
   return (
     <div className='text-white'>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
-                <ProjectCard 
-                title='Projet Web'
-                color='card-1'
-                total={12}
-                completed={3}
-                />
+            <ProjectCard 
+            title='Example'
+            color='card-3'
+            total={12}
+            completed={3}
+            />
+            {listProjects.map((item,index) => (
+
+              <ProjectCard 
+              key={index}
+              title={item.p.title}
+              color={cards[index%cards.length]}
+              total={item.t}
+              completed={item.c}
+              />
+              
+            ))}
+
+                {/*
                 <ProjectCard 
                 title='Next JS'
                 color='card-4'
@@ -28,7 +74,8 @@ export default function page() {
                 color='card-3'
                 total={12}
                 completed={9}
-                />
+                /> */}
+
               </div>
     </div>
   )
