@@ -6,7 +6,7 @@ import React, { ReactNode } from 'react'
 function HomeLayout({children}:{children:ReactNode}) {
   return (
     <>
-      <main className='relative'>
+      <main className='relative mb-3'>
           <Navbar/>
           <div className='flex'>
               <Sidebar/>
