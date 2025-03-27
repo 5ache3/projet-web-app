@@ -1,6 +1,7 @@
 'use client'
 import TasktCreation from '@/components/modals/TaskCreation';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useUser } from '@clerk/nextjs';
 import { CheckCheckIcon, Pen, Plus, Share2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
@@ -29,6 +30,7 @@ type Task={
 export default function page() {
   const { user } = useUser();
   const [clicked,setClicked]=useState(false)
+  const [isloading,setLoading]=useState(true)
   const user_id = user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
   const [data,setData]=useState<Project>()
   const [tasks,setTasks]=useState<Task[]>([])
@@ -41,6 +43,7 @@ export default function page() {
         const data = await fetch(`/api/projects/${id}`);
         const project = await data?.json()
         setData(project)
+        setLoading(false)
       } catch (error) {
         console.error("Error", error);
       }
@@ -57,43 +60,62 @@ export default function page() {
     fetchProjects();
     fetchTasks();
   }, [id]);
-  return (
-    <div className=' p-6 px-10 rounded-xl bg-dark-1'>
-      <div className='m-1 w-full flex justify-between'>
-        <div></div>
-        <div className='text-gray-1 flex gap-5'>
-          <Pen className='cursor-pointer hover:bg-gray-1 hover:text-white rounded-full'/>
-          <Share2 className='cursor-pointer hover:bg-gray-1 hover:text-white rounded-full'/>
-        </div>
-      </div>
-      <div className='text-white contain  w-full flex flex-col gap-6' >
-        <div className='title'>
-          <span className='text-gray-1'>Nom: </span>{data?.p.title}
-        </div>
-        <div className='flex flex-col '>
-          <span className='text-gray-1'>description: </span>
-          <div className='mx-4'>
-            {data?.p.description}
+  if(isloading){
+    return (<></>)
+  }else{
+    return (
+      <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-dark-1 min-lg:w-3xl md:m-auto'>
+        <div className='m-1 w-full flex justify-between'>
+          <div></div>
+          <div className='text-gray-1 flex gap-5'>
+            <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'>
+              <Pen/>
+            </div>
+            <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'>
+              <Share2/>
+            </div>
           </div>
         </div>
-        <div className='tasks flex flex-col gap-1'>
-          <ul className='bg-gray-1 h-50 w-full p-4 flex flex-col gap-3 rounded-xl overflow-x-auto '>
-            {tasks.map((item,index) => (
-              <li key={index}>{item.title}</li>
-            ))}
-          </ul>
-
-            <div className='flex gap-2 justify-around w-full'>
-              <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setClicked(true)}}><Plus/></Button>
-              <Button className='bg-gray-1 cursor-pointer w-50'><CheckCheckIcon/></Button>
+        <div className='text-white contain  w-full flex flex-col gap-6' >
+          <div className='title'>
+            <span className='text-gray-1'>Nom: </span>{data?.p.title}
+          </div>
+          <div className='flex flex-col '>
+            <span className='text-gray-1'>description: </span>
+            <div className='mx-4'>
+              {data?.p.description}
+            </div>
+          </div>
+          <div className='tasks flex flex-col gap-1'>
+            <div className='bg-white text-black scrolable h-50 w-full p-4 flex flex-col gap-3 rounded-xl overflow-auto '>
+              {tasks.map((item,index) => (
+                <div key={index} className='bg-gray-1 p-2 rounded-lg flex justify-around'>
+                  <div className='w-30'>
+                    {item.title} 
+                  </div>
+                  <div>
+                    <Checkbox 
+                    className='size-5'
+                    
+                    checked={item.completed}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+  
+              <div className='flex gap-2 justify-around w-full'>
+                <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setClicked(true)}}><Plus/></Button>
+                <Button className='bg-gray-1 cursor-pointer w-50'><CheckCheckIcon/></Button>
+            </div>
           </div>
         </div>
+        <TasktCreation
+          isOpen={clicked}
+          onClose={()=>{setClicked(false)}}
+          closeDialog={()=>{setClicked(false)}}
+        />
       </div>
-      <TasktCreation
-        isOpen={clicked}
-        onClose={()=>{setClicked(false)}}
-        closeDialog={()=>{setClicked(false)}}
-      />
-    </div>
-  )
+    )
+  }
 }

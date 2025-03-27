@@ -8,7 +8,7 @@ export const sidebarLinks=[
     {
         label:'Projects',
         route:'/projects',
-        icon:'assets/share.svg',
+        icon:'/assets/share.svg',
     },
     {
         label:'Profile',

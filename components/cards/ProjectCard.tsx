@@ -3,10 +3,10 @@ import Image from 'next/image'
 import React from 'react'
 import CircularProgressCard from './circularProgrssBar'
 
-export default function ProjectCard({title,color,total,completed}:{title:string,color:string,total:number,completed:number}) {
+export default function ProjectCard({title,color,total,completed,handleClick}:{title:string,color:string,total:number,completed:number,handleClick?:()=>void}) {
   return (
     <div className={`m-auto px-4 py-6 w-full xl:min-w-[300px] max-w-[350px]  min-h-[200px] 
-      rounded-[16px] cursor-pointer flex flex-col gap-4 justify-between ${color}`}>
+      rounded-[16px] cursor-pointer flex flex-col gap-4 justify-between ${color}`} onClick={handleClick}>
       <h1 className='text-white card-title font-semibold text-2xl'>{title}</h1>
         <div className='flex flex-col justify-around w-full'>
           <CircularProgressCard nb_tasks={total} completed_tasks={completed}/>

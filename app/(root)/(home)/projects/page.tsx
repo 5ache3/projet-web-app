@@ -2,6 +2,7 @@
 import ProjectCard from '@/components/cards/ProjectCard'
 import { GetListProjects } from '@/lib/actions/project.actions'
 import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 type project={
   p:{
@@ -20,7 +21,7 @@ export default function page() {
     const [listProjects, setListProjects] = useState<project[]>([]); // Assuming list_projects is an array of strings.
     const cards=['card-1','card-2','card-3','card-4',]
     const id = user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
-
+    const router = useRouter()
     // Fetch projects when the component is mounted
     useEffect(() => {
       const fetchProjects = async () => {
@@ -52,6 +53,7 @@ export default function page() {
               color={cards[index%cards.length]}
               total={item.t}
               completed={item.c}
+              handleClick={()=>{router.push(`/projects/${item.p.id}`)}}
               />
               
             ))}

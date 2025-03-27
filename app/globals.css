@@ -166,6 +166,16 @@
 .cl-userButtonPopoverActionButton{
   color: #fff;
 }
+
+::-webkit-scrollbar{
+  @apply w-2 
+}
+::-webkit-scrollbar-track{
+  @apply  bg-gray-200 rounded-2xl
+}
+::-webkit-scrollbar-thumb{
+  @apply bg-gray-400 drop-shadow-md rounded-2xl
+}
 @layer base {
   * {
     @apply border-border outline-ring/50;
