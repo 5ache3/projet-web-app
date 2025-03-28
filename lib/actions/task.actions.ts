@@ -10,6 +10,18 @@ export async function createTask({data}:{ data: Omit<Task, 'id' | 'created_at'> 
         console.log(error)
     }
 }
+
+export async function updateTask({data}:{ data:  Omit<Task,'created_at'> }) {
+    try{
+        const task = await prisma.task.update({
+            data:data,
+            where:{id:data.id}
+        });
+        return task
+    }catch(error){
+        console.log(error)
+    }
+}
 export async function getTasks({project_id}:{project_id:string}) {
     try{
         const tasks = await prisma.task.findMany({

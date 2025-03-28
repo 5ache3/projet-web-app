@@ -35,12 +35,12 @@ export default function ProjectCreation({isOpen,onClose,closeDialog}:promps) {
             const data= {
               title: name,
               owner_id: id, 
-              description: description || null, // Ensure description is either string or null
-              deadline: date ? new Date(date) : null, // Convert to Date if not null
+              description: description || null,
+              deadline: date ? new Date(date) : null,
             }
             
             const response = await fetch("/api/projects", {
-                method: "POST", // ✅ Ensure this is POST
+                method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },

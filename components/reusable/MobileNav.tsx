@@ -23,7 +23,7 @@ export default function MobileNav() {
         <Sheet>
             <SheetTrigger>
                 <Image
-                src="icons/hamburger.svg"
+                src="/icons/hamburger.svg"
                 alt='humberger icon'
                 height={35}
                 width={35}

@@ -1,9 +1,11 @@
 'use client'
 import TasktCreation from '@/components/modals/TaskCreation';
+import ListTasks from '@/components/reusable/ListTasks';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useUser } from '@clerk/nextjs';
-import { CheckCheckIcon, Pen, Plus, Share2 } from 'lucide-react';
+import { set } from 'date-fns';
+import { CheckCheckIcon, DotSquareIcon, Pen, Plus, Share2 } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -32,6 +34,7 @@ export default function page() {
   const [clicked,setClicked]=useState(false)
   const [isloading,setLoading]=useState(true)
   const user_id = user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
+
   const [data,setData]=useState<Project>()
   const [tasks,setTasks]=useState<Task[]>([])
   const params = useParams();
@@ -64,7 +67,7 @@ export default function page() {
     return (<></>)
   }else{
     return (
-      <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-dark-1 min-lg:w-3xl md:m-auto'>
+      <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-dark-1  md:m-auto'>
         <div className='m-1 w-full flex justify-between'>
           <div></div>
           <div className='text-gray-1 flex gap-5'>
@@ -87,28 +90,12 @@ export default function page() {
             </div>
           </div>
           <div className='tasks flex flex-col gap-1'>
-            <div className='bg-white text-black scrolable h-50 w-full p-4 flex flex-col gap-3 rounded-xl overflow-auto '>
-              {tasks.map((item,index) => (
-                <div key={index} className='bg-gray-1 p-2 rounded-lg flex justify-around'>
-                  <div className='w-30'>
-                    {item.title} 
-                  </div>
-                  <div>
-                    <Checkbox 
-                    className='size-5'
-                    
-                    checked={item.completed}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-  
-              <div className='flex gap-2 justify-around w-full'>
+            <ListTasks tasks={tasks}/>
+            <div className='flex gap-2 justify-around w-full'>
                 <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setClicked(true)}}><Plus/></Button>
                 <Button className='bg-gray-1 cursor-pointer w-50'><CheckCheckIcon/></Button>
             </div>
-          </div>
+    </div>
         </div>
         <TasktCreation
           isOpen={clicked}
