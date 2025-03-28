@@ -19,18 +19,40 @@ interface promps{
 export default function TasktActions({
     isOpen,
     onClose,
-    handleClick,
     closeDialog,
-    id,
-    Title,
-    Description,
-    Completed}:promps) {
+    task}:promps) {
     
-    const [name,setName]=useState(Title);
-    const [description,setDescription]=useState(Description);
+    const [name,setName]=useState(task.title);
+    const [description,setDescription]=useState(task.description);
     const onSubmit = async () => {
         closeDialog();
-        
+        try{
+            const data= {
+                id:task.id,
+                title:task.title,
+                project_id:task.project_id,
+                description:task.description,
+                created_at:task.created_at,
+                completed:true
+              }
+              
+            const response = await fetch(`/api/projects/${task.project_id}/tasks/${task.id}`, {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            console.log(response)
+            if(response.ok){
+                toast.success("updated")
+            }else{
+                toast.error("error")
+            }
+
+        }catch(error){
+            console.log('error: ',error)
+        }
       };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

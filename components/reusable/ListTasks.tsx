@@ -65,10 +65,7 @@ export default function ListTasks({tasks}:{tasks:Task[]}) {
                             isOpen={clicked===item.id}
                             closeDialog={()=>{SetClicked('')}}
                             onClose={()=>{SetClicked('')}}
-                            id={item.id}
-                            Title={item.title}
-                            Description={item.description}
-                            Completed={completed_arr[index]}
+                            task={item}
                             />
                         </div>
                     </div>
