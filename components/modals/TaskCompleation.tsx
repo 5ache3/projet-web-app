@@ -29,7 +29,7 @@ export default function TasktCompletion({
     closeDialog,
     task}:promps) {
     
-    const [message,setMessage]=useState(task.description);
+    const [message,setMessage]=useState('');
     const onSubmit = async () => {
         closeDialog();
         try{
