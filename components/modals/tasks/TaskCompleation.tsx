@@ -1,16 +1,14 @@
 
 'use client'
 import{useState } from 'react'
-import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
-import { Button } from '../ui/button'
+import { Dialog, DialogContent, DialogTitle } from '../../ui/dialog'
+import { Button } from '../../ui/button'
 import { toast } from 'sonner'
-import { useParams} from 'next/navigation'
 import { Checkbox } from '@radix-ui/react-checkbox'
-
 interface promps{
     isOpen:boolean
     onClose?:()=>void
-    // handleSubmit:()=>void
+    handleSubmit:()=>void
     closeDialog:()=>void
     task:Task
 }
@@ -23,28 +21,24 @@ type Task={
     completed: boolean
 }
 
-export default function TasktActions({
+export default function TasktCompletion({
     isOpen,
     onClose,
+    handleSubmit,
     closeDialog,
     task}:promps) {
     
-    const [name,setName]=useState(task.title);
-    const [description,setDescription]=useState(task.description);
+    const [message,setMessage]=useState('');
     const onSubmit = async () => {
         closeDialog();
-        if(!name){
-            toast.error('enter task name')
-            return
-        }
         try{
             const data= {
                 id:task.id,
-                title:name,
+                title:task.title,
                 project_id:task.project_id,
-                description:description,
+                description:task.description,
                 created_at:task.created_at,
-                completed:task.completed
+                completed:true
               }
               
             const response = await fetch(`/api/projects/${task.project_id}/tasks/${task.id}`, {
@@ -57,6 +51,8 @@ export default function TasktActions({
             console.log(response)
             if(response.ok){
                 toast.success("updated")
+                handleSubmit()
+                setMessage('')
             }else{
                 toast.error("error")
             }
@@ -67,29 +63,25 @@ export default function TasktActions({
       };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogTitle className='hidden'>Edit Task</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-dark-2 w-100 text-white'>
+        <DialogTitle className='hidden'>Complete Task</DialogTitle>
+        <DialogContent className='flex flex-col p-10 bg-dark-2 w-80 text-white'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
                         onSubmit();
                         }}>
                     <div className='project-title-insertion flex flex-col gap-2'>
-                        <label>Task Name</label>
-                        <input 
-                        type='text' 
-                        value={name} 
-                        onChange={(event)=>{setName(event.target.value)}}
-                        className='bg-white h-13 rounded-xl text-black font-semibold px-4' 
-                        placeholder='Name' required/>
+                        <div> Name: <span className='text-gray-1'>{task.title}</span></div>
+
+                        <div> Description: <span className='text-gray-1'>{task.description}</span></div>
                     </div>
                     <div className='flex flex-col gap-2'>
-                        <label>Description</label>
+                        <label>Message</label>
                         <textarea
-                        rows={5} 
-                        value={description||''} 
-                        onChange={(event)=>{setDescription(event.target.value)}}
-                        className='bg-white rounded-xl text-black font-semibold p-4'
+                        rows={2} 
+                        value={message||''} 
+                        onChange={(event)=>{setMessage(event.target.value)}}
+                        className='bg-white rounded-md text-black font-semibold p-4 text-sm'
                         ></textarea> 
                     </div>
                     <Checkbox/>   

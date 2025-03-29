@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import ListTasks from '../reusable/ListTasks'
-import { Button } from '../ui/button'
+import ListTasks from '../../reusable/ListTasks'
+import { Button } from '../../ui/button'
 import { CheckCheckIcon, Pen, Plus, Share2 } from 'lucide-react'
-import TasktCreation from './TaskCreation'
+import TasktCreation from '../tasks/TaskCreation'
 import ProjectCreation from './ProjectCreation'
 
 type Project={

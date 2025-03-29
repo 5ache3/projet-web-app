@@ -1,5 +1,5 @@
 'use client'
-import ProjectHero from '@/components/modals/ProjectHero';
+import ProjectHero from '@/components/modals/project/ProjectHero';
 import { useUser } from '@clerk/nextjs';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'

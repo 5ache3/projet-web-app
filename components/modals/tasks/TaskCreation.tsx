@@ -1,8 +1,8 @@
 
 'use client'
 import{useState } from 'react'
-import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
-import { Button } from '../ui/button'
+import { Dialog, DialogContent, DialogTitle } from '../../ui/dialog'
+import { Button } from '../../ui/button'
 import { toast } from 'sonner'
 import { useParams, useRouter } from 'next/navigation'
 interface promps{
