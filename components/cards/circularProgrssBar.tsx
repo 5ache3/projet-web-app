@@ -8,13 +8,12 @@ interface CircularProgressProps {
 }
 
 const CircularProgressCard: React.FC<CircularProgressProps> = ({nb_tasks,completed_tasks }) => {
-  const radius = 40; // Radius of the circle
-  const strokeWidth = 4;
-  let value=Math.ceil((completed_tasks/nb_tasks)*100);
+  
+  let value=Math.round((completed_tasks/nb_tasks)*100);
   if(nb_tasks===0){
     value=0;
   }
-  const circumference = 2 * Math.PI * radius;
+  const circumference = 2 * Math.PI * 40;
   const progress = (value / 100) * circumference;
 
   return (
@@ -25,17 +24,16 @@ const CircularProgressCard: React.FC<CircularProgressProps> = ({nb_tasks,complet
           <circle
             cx="50"
             cy="50"
-            r={radius}
-            strokeWidth={strokeWidth}
+            r={40}
+            strokeWidth={4}
             fill="transparent"
             className="stroke-gray-300"
           />
-          {/* Progress Circle */}
           <circle
             cx="50"
             cy="50"
-            r={radius}
-            strokeWidth={strokeWidth}
+            r={40}
+            strokeWidth={4}
             fill="transparent"
             stroke="blue"
             strokeLinecap="round"
@@ -44,7 +42,7 @@ const CircularProgressCard: React.FC<CircularProgressProps> = ({nb_tasks,complet
             className="transition-all duration-500 ease-in-out"
           />
         </svg>
-        {/* Display Percentage */}
+        
         <div className="absolute inset-0 flex items-center justify-center text-lg font-bold">
           {value}%
         </div>

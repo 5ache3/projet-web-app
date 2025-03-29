@@ -39,12 +39,6 @@ export default function page() {
   return (
     <div className='text-white'>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
-            <ProjectCard 
-            title='Example'
-            color='card-3'
-            total={12}
-            completed={3}
-            />
             {listProjects.map((item,index) => (
 
               <ProjectCard 

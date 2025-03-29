@@ -23,6 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useState } from "react"
 
 const FormSchema = z.object({
   dob: z.date({
@@ -30,29 +31,22 @@ const FormSchema = z.object({
   }),
 })
 
-export function CalendarForm({handleChange}:{handleChange:(value:Date|undefined)=>void}) {
+export function CalendarForm({handleChange,date}:{handleChange:(value:Date|undefined)=>void,date?:Date|undefined}) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
-
-//   function onSubmit(data: z.infer<typeof FormSchema>) {
-//     toast({
-//       title: "You submitted the following values:",
-//       description: (
-//         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-//           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-//         </pre>
-//       ),
-//     })
-//   }
-
   return (
     <Form {...form}>
       <div className="space-y-8">
         <FormField
           control={form.control}
           name="dob"
-          render={({ field }) => (
+          render={({ field }) => {
+            if(date){
+              field.value=date;
+            }
+
+            return(
             <FormItem className="flex flex-col">
               <FormLabel>Deadline</FormLabel>
               <Popover>
@@ -68,7 +62,7 @@ export function CalendarForm({handleChange}:{handleChange:(value:Date|undefined)
                       {field.value ? (
                         format(field.value, "PPP")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>{'Pick a date'}</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -79,8 +73,8 @@ export function CalendarForm({handleChange}:{handleChange:(value:Date|undefined)
                     mode="single"
                     selected={field.value}
                     onSelect={(date) => {
-                                field.onChange(date); // Update form state
-                                handleChange(date); // Call your custom function
+                                field.onChange(date); 
+                                handleChange(date); 
                             }}
                     disabled={(date) =>
                       date < new Date() || date > new Date("2030-01-01")
@@ -95,7 +89,7 @@ export function CalendarForm({handleChange}:{handleChange:(value:Date|undefined)
               </FormDescription>
               <FormMessage />
             </FormItem>
-          )}
+          )}}
         />
       </div>
     </Form>

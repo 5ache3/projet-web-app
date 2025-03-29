@@ -19,7 +19,6 @@ type Task={
     description: string,
     created_at: Date,
     completed: boolean
-    task :Task
 }
 
 export default function TasktCompletion({

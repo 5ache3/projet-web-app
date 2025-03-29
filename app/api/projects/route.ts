@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { createConnection } from "@/lib/db/connection";
 import { createRelation } from "@/lib/actions/project.actions";
 
 const prisma = new PrismaClient();
@@ -19,8 +18,6 @@ export async function POST(req: Request) {
         });
         const project_id=newProject.id;
         
-        const query=`INSERT INTO user_project (user_id, project_id,role) VALUES (?,?, 'creator');`;
-        // const [response]= await db.query(query,[owner_id,newProject.id]);
         const response =createRelation(owner_id,project_id);
         return NextResponse.json(response, { status: 201 });
     } catch (error: unknown) {

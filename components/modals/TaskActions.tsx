@@ -6,16 +6,23 @@ import { Button } from '../ui/button'
 import { toast } from 'sonner'
 import { useParams} from 'next/navigation'
 import { Checkbox } from '@radix-ui/react-checkbox'
+
 interface promps{
     isOpen:boolean
-    id:string
-    Title:string
-    Description:string
-    Completed:boolean
     onClose?:()=>void
-    handleClick?:()=>void
+    // handleSubmit:()=>void
     closeDialog:()=>void
+    task:Task
 }
+type Task={
+    id: string,
+    title: string,
+    project_id: string,
+    description: string,
+    created_at: Date,
+    completed: boolean
+}
+
 export default function TasktActions({
     isOpen,
     onClose,
@@ -26,14 +33,18 @@ export default function TasktActions({
     const [description,setDescription]=useState(task.description);
     const onSubmit = async () => {
         closeDialog();
+        if(!name){
+            toast.error('enter task name')
+            return
+        }
         try{
             const data= {
                 id:task.id,
-                title:task.title,
+                title:name,
                 project_id:task.project_id,
-                description:task.description,
+                description:description,
                 created_at:task.created_at,
-                completed:true
+                completed:task.completed
               }
               
             const response = await fetch(`/api/projects/${task.project_id}/tasks/${task.id}`, {

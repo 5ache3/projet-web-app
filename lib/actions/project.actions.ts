@@ -74,10 +74,11 @@ export async function GetListProjects(user_id:string) {
 }
 
 
-export async function updateProject(id:string,data:Partial<Projet>) {
+export async function updateProject({data,id}:{data:Omit<Projet,'created_at'|'id'>,id:string}) {
     try{
         const project=await prisma.projet.update({
-            where:{id},data
+            data:data,
+            where:{id}
         })
         return project
     }catch(error){

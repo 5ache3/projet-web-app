@@ -12,15 +12,21 @@ interface promps{
     onClose?:()=>void
     handleClick?:()=>void
     closeDialog:()=>void
+    project_id?:string
+    Title?:string
+    Description?:string
+    Deadline?:Date
+    actionType?:'creating'|'editing'
 }
-export default function ProjectCreation({isOpen,onClose,closeDialog}:promps) {
-    const [date, setDate] = useState<Date | undefined>();
-    const [name,setName]=useState('');
-    const [description,setDescription]=useState('');
+export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,Title,Description,Deadline,actionType}:promps) {
+    const [date, setDate] = useState<Date | undefined>(Deadline);
+    const [name,setName]=useState(Title||'');
+    const [description,setDescription]=useState(Description||'');
     const { user } = useUser();
     const router=useRouter()
     const id=user?.id||'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
-    const onSubmit = async () => {
+
+    const createProject = async () => {
         closeDialog();
         if (!name || !date) {
           toast.error("Please enter a project name and deadline.");
@@ -61,10 +67,61 @@ export default function ProjectCreation({isOpen,onClose,closeDialog}:promps) {
           toast.error("Something went wrong.");
         }
       };
+
+    const updateProject = async () => {
+        closeDialog();
+        if (!name || !date) {
+          toast.error("Please enter a project name and deadline.");
+          return;
+        }
+        // TODO: if the id does not match the owner id this action will be forwarded to the requests
+        if (!id) {
+          toast.error("You must be logged in.");
+          return;
+        }
+        try {
+            const data= {
+              project_id:project_id,
+              title: name,
+              owner_id: id, 
+              description: description || null,
+              deadline: date,
+            }
+            console.log(data)
+            const response = await fetch(`/api/projects/${project_id}`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              });
+            
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }else{
+                setDescription('')
+                setName('')
+                setDate(undefined)
+                router.refresh()
+                toast.success("Project updated successfully!");
+              }
+          
+        } catch (error) {
+          toast.error("Something went wrong.");
+        }
+      };
+
+    const onSubmit = ()=>{
+      if(actionType==='editing'){
+        updateProject();
+      }else{
+        createProject();
+      }
+    }
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Create Project</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-dark-2 w-full text-white'>
+        <DialogContent className='flex flex-col p-10 bg-dark-2 w-full  text-white'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
@@ -91,17 +148,8 @@ export default function ProjectCreation({isOpen,onClose,closeDialog}:promps) {
                         ></textarea>    
                     </div>
                 <div>
-                    <CalendarForm handleChange={(value:Date|undefined)=>{setDate(value)}}/>
+                    <CalendarForm handleChange={(value:Date|undefined)=>{setDate(value)}} date={date}/>
                 </div>
-
-                {/* <div className='flex justify-around mt-2'>
-                    <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        className="rounded-md border w-65 flex justify-around"
-                    />
-                </div> */}
                 <Button className='bg-white text-dark-1 font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
             </form>
         </DialogContent>
