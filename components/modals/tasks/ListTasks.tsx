@@ -1,10 +1,10 @@
 import { Check, DotIcon, DotSquareIcon } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import TasktActions from '../modals/tasks/TaskActions'
-import { Checkbox } from '../ui/checkbox'
-import TasktCompletion from '../modals/tasks/TaskCompleation'
+import { Checkbox } from '../../ui/checkbox'
+import TasktCompletion from './TaskCompleation'
 import { it } from 'node:test'
+import TasktActions from './TaskActions'
 
 type Task={
     id: string,

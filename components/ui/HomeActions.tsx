@@ -30,6 +30,7 @@ export default function HomeActions() {
       />
       <ProjectSearch 
       isOpen={clicked==='joining'}
+      closeDialog={()=>{setClicked('closed')}}
       onClose={()=>{setClicked('closed')}}
       />
     </div>

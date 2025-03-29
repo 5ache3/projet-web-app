@@ -4,14 +4,27 @@ import {Projet} from '@prisma/client'
 type id_p={
     project_id:string
 }
-export async function createRelation(u_id:string,p_id:string){
+export async function createRelation({u_id,p_id,role}:{u_id:string,p_id:string,role?:string}){
     const relation = await prisma.user_Project.create({
             data:{
                 project_id :p_id,
                 user_id:u_id,
-                role :'creator'
+                role :role||'creator'
             }
         })
+        return relation
+}
+export async function findRelation({u_id,p_id}:{u_id:string,p_id:string}){
+    const relation = await prisma.user_Project.findMany({
+        where:{project_id:p_id,AND:{user_id:u_id}}
+        })
+        return relation
+}
+export async function findProject({id}:{id:string}){
+    const projet = await prisma.projet.findMany({
+        where:{id}
+        })
+        return projet
 }
 export async function createProject({data}:{ data: Omit<Projet, 'id' | 'created_at'> }) {
     try{

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import ListTasks from '../../reusable/ListTasks'
 import { Button } from '../../ui/button'
 import { CheckCheckIcon, Pen, Plus, Share2 } from 'lucide-react'
 import TasktCreation from '../tasks/TaskCreation'
 import ProjectCreation from './ProjectCreation'
+import ListTasks from '../tasks/ListTasks'
+import ShareProject from './ShareProject'
 
 type Project={
     p:{
@@ -29,6 +30,7 @@ type Project={
 export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
     const [addingTask,setAddingTask]=useState(false)
     const [editingProject,setEditingProject]=useState(false)
+    const [sharingProject,setSharingProject]=useState(false)
   return (
     <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-dark-1  md:m-auto'>
           <div className='m-1 w-full flex justify-between'>
@@ -38,20 +40,29 @@ export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
                      onClick={()=>{setEditingProject(true)}}>
                 <Pen/>
               </div>
-              <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'>
+              <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                      onClick={()=>{setSharingProject(true)}}>
                 <Share2/>
               </div>
-              <ProjectCreation
-              isOpen={editingProject}
-              closeDialog={()=>{setEditingProject(false)}}
-              onClose={()=>{setEditingProject(false)}}
-              actionType='editing'
-              project_id={data?.p.id}
-              Title={data?.p.title}
-              Description={data?.p.description}
-              Deadline={data?.p.deadline}
+              <div>
+                <ProjectCreation isOpen={editingProject}
+                  closeDialog={()=>{setEditingProject(false)}}
+                  onClose={()=>{setEditingProject(false)}}
+                  actionType='editing'
+                  project_id={data?.p.id}
+                  Title={data?.p.title}
+                  Description={data?.p.description}
+                  Deadline={data?.p.deadline}
+                />
+                <ShareProject
+                isOpen={sharingProject}
+                onClose={()=>{setSharingProject(false)}}
+                id={data?.p.id}
+                title={data?.p.title}
+                />
 
-              />
+              </div>
+
             </div>
           </div>
           <div className='text-white contain  w-full flex flex-col gap-6' >
