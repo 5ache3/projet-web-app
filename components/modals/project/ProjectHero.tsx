@@ -5,6 +5,9 @@ import TasktCreation from '../tasks/TaskCreation'
 import ProjectCreation from './ProjectCreation'
 import ListTasks from '../tasks/ListTasks'
 import ShareProject from './ShareProject'
+import { Popover } from '@/components/ui/popover'
+import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
+import Image from 'next/image'
 
 type Project={
     p:{
@@ -36,14 +39,27 @@ export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
           <div className='m-1 w-full flex justify-between'>
             <div></div>
             <div className='text-gray-1 flex gap-5'>
-              <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
-                     onClick={()=>{setEditingProject(true)}}>
-                <Pen/>
-              </div>
-              <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
-                      onClick={()=>{setSharingProject(true)}}>
-                <Share2/>
-              </div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Image className='cursor-pointer'
+                    alt='actions'
+                    src={'/assets/more.svg'}
+                    height={24}
+                    width={24}
+                    />
+                </PopoverTrigger>
+
+                <PopoverContent className='p-2 flex flex-col gap-3'>
+                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                        onClick={()=>{setEditingProject(true)}}>
+                    <Pen/>
+                  </div>
+                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                          onClick={()=>{setSharingProject(true)}}>
+                    <Share2/>
+                  </div>
+                </PopoverContent>
+              </Popover>
               <div>
                 <ProjectCreation isOpen={editingProject}
                   closeDialog={()=>{setEditingProject(false)}}
