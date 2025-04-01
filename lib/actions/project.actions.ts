@@ -36,7 +36,14 @@ export async function createProject({data}:{ data: Omit<Projet, 'id' | 'created_
 }
 
 export async function deleteProject({id}:{id:string}) {
+
     try{
+        const deleteTasks= await prisma.task.deleteMany({
+            where:{project_id:id}
+        });
+        const deleteRelation= await prisma.user_Project.deleteMany({
+            where:{project_id:id}
+        });
         const project=await prisma.projet.delete({
             where:{id}
         })
