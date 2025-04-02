@@ -1,12 +1,12 @@
-import { Check, DotIcon, DotSquareIcon, Pen, Share2 } from 'lucide-react'
+import { Check, Delete, DeleteIcon, Pen, Share2, Trash } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Checkbox } from '../../ui/checkbox'
 import TasktCompletion from './TaskCompleation'
-import { it } from 'node:test'
 import TasktActions from './TaskActions'
 import { PopoverTrigger,Popover  } from '@/components/ui/popover'
-import { PopoverContent } from '@radix-ui/react-popover'
+import { PopoverClose, PopoverContent } from '@radix-ui/react-popover'
+import { toast } from 'sonner'
 
 type Task={
     id: string,
@@ -18,77 +18,117 @@ type Task={
 }
 
 export default function ListTasks({tasks}:{tasks:Task[]}) {
-    const [clicked,SetClicked]=useState('');
-    const [clicked2,SetClicked2]=useState('');
-    const [completed_arr,setCompleted_arr]=useState<boolean[]>([])
+    const [clicked,SetClicked]=useState(-1);
+    const [clicked2,SetClicked2]=useState(-1);
+    const [tasks_list,setTasks]=useState<Task[]>(tasks);
 
     const completeItem=(index:number)=>{
         const list=[]
-        for(let i=0;i<completed_arr.length;i++){
+        for(let i=0;i<tasks_list.length;i++){
             if(i===index){
-                list.push(!completed_arr[i])
+                const r=tasks_list[i]
+                r.completed = !r.completed
+                list.push(r)
             }else{
-                list.push(completed_arr[i])
+                list.push(tasks_list[i])
             }
         }
-        setCompleted_arr(list);
+        setTasks(list);
     }
     useEffect(()=>{
-        setCompleted_arr(tasks.map((item)=>item.completed))
+        setTasks(tasks)
 
     },[tasks])
+    const deleteFromList= (index:number)=>{
+        const list=[]
+        for(let i=0;i<tasks_list.length;i++){
+            if(i===index){
+                continue
+            }else{
+                list.push(tasks_list[i])
+            }
+        }
+        setTasks(list);
+    }
+    const deleteTask = async (index:number)=>{
+        try{
+            deleteFromList(index)
+            const task=tasks_list[index]
+            const data={task_id:task.id}
+            const response = await fetch(`/api/projects/${task.project_id}/tasks/${task.id}`, {
+                method: "DELETE",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            if(response.ok){
+                toast.success("task deleted")
+            }else{
+                toast.error("error")
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
   return (
         <div className='bg-white p-4 px-2 text-black scrolable h-50 w-full flex flex-col gap-3 rounded-xl overflow-auto '>
-            {tasks.map((item,index) => {
+            {[...tasks_list].map((item,index) => {
                 return (
-                    <div><div key={index} className='bg-gray-1 p-4 rounded-lg flex justify-between'>
-                        <div className='max-w-50'>
-                        {item.title} 
-                        </div>
-                            <div onClick={()=>{SetClicked2(item.id)}}>
-                            <Checkbox checked={completed_arr[index]}/>
+                        <div key={index} className='bg-gray-1 p-4 rounded-lg flex justify-between'>
+                            <div className='max-w-50'>
+                            {item.title} 
                             </div>
-                        <div>
-                            <Popover>
-                                <PopoverTrigger>
-                                    <Image className='cursor-pointer'
-                                    alt='actions'
-                                    src={'/assets/more.svg'}
-                                    height={24}
-                                    width={24}
-                                    />
-                                </PopoverTrigger>
-                                <PopoverContent className='p-2 flex flex-col gap-3 bg-gray-100 rounded-xl'>
-                                    <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
-                                    onClick={()=>{SetClicked(item.id)}}>
-                                        <Pen/>
-                                    </div>
-
-                                    <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
-                                            onClick={()=>{}}>
-                                        <Share2/>
-                                    </div>
-                                    </PopoverContent>
-                            </Popover>
+                                <div onClick={()=>{SetClicked2(index)}}>
+                                <Checkbox checked={tasks_list[index].completed}/>
+                                </div>
+                            <div>
+                                <Popover>
+                                    <PopoverTrigger>
+                                        <Image className='cursor-pointer'
+                                        alt='actions'
+                                        src={'/assets/more.svg'}
+                                        height={24}
+                                        width={24}
+                                        />
+                                    </PopoverTrigger>
+                                    <PopoverClose>
+                                        <PopoverContent className='p-2 flex flex-col gap-3 bg-gray-100 rounded-xl'>
+                                            <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
+                                            onClick={()=>{SetClicked(index)}}>
+                                                <Pen/>
+                                            </div>
+                                            <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
+                                                    onClick={()=>{deleteTask(index)}}>
+                                                <Trash/>
+                                            </div>
+                                            </PopoverContent>
+                                    </PopoverClose>
+                                </Popover>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <TasktCompletion
-                        isOpen={clicked2===item.id}
-                        closeDialog={()=>{SetClicked2('')}}
-                        onClose={()=>{SetClicked2('')}}
-                        handleSubmit={()=>{completeItem(index)}}
-                        task={item}
-                        />
-                        <TasktActions
-                        isOpen={clicked===item.id}
-                        closeDialog={()=>{SetClicked('')}}
-                        onClose={()=>{SetClicked('')}}
-                        task={item}
-                        />
-                    </div>
-                    </div>
                 )})}
+                <div>
+                {(clicked2>=0)&&(
+                    <TasktCompletion
+                    isOpen={clicked2>=0}
+                    closeDialog={()=>{SetClicked2(-1)}}
+                    onClose={()=>{SetClicked2(-1)}}
+                    handleSubmit={()=>{completeItem(clicked2)}}
+                    tasks={tasks_list}
+                    index={clicked2}
+                    />
+                )}
+                {clicked>=0&&(
+                    <TasktActions
+                    isOpen={clicked>=0}
+                    closeDialog={()=>{SetClicked(-1)}}
+                    onClose={()=>{SetClicked(-1)}}
+                    tasks={tasks_list}
+                    index={clicked}
+                    />
+                )}
+                </div>
         </div>
     
   )

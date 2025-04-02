@@ -10,7 +10,8 @@ interface promps{
     onClose?:()=>void
     handleSubmit:()=>void
     closeDialog:()=>void
-    task:Task
+    index:number
+    tasks:Task[]
 }
 type Task={
     id: string,
@@ -26,9 +27,11 @@ export default function TasktCompletion({
     onClose,
     handleSubmit,
     closeDialog,
-    task}:promps) {
+    index,
+    tasks}:promps) {
     
     const [message,setMessage]=useState('');
+    const [task,setTask]=useState(tasks[index])
     const onSubmit = async () => {
         closeDialog();
         try{

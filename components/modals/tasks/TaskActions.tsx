@@ -12,7 +12,8 @@ interface promps{
     onClose?:()=>void
     // handleSubmit:()=>void
     closeDialog:()=>void
-    task:Task
+    index:number
+    tasks:Task[]
 }
 type Task={
     id: string,
@@ -27,8 +28,9 @@ export default function TasktActions({
     isOpen,
     onClose,
     closeDialog,
-    task}:promps) {
-    
+    index,
+    tasks}:promps) {
+    const [task,setTask]=useState(tasks[index])
     const [name,setName]=useState(task.title);
     const [description,setDescription]=useState(task.description);
     const onSubmit = async () => {
@@ -54,7 +56,6 @@ export default function TasktActions({
                 },
                 body: JSON.stringify(data),
             });
-            console.log(response)
             if(response.ok){
                 toast.success("updated")
             }else{
