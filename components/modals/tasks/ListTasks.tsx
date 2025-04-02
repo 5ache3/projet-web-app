@@ -1,4 +1,4 @@
-import { Check, Delete, DeleteIcon, Pen, Share2, Trash } from 'lucide-react'
+import { Check, CheckCheckIcon, Delete, DeleteIcon, Pen, Plus, Share2, Trash } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Checkbox } from '../../ui/checkbox'
@@ -7,6 +7,8 @@ import TasktActions from './TaskActions'
 import { PopoverTrigger,Popover  } from '@/components/ui/popover'
 import { PopoverClose, PopoverContent } from '@radix-ui/react-popover'
 import { toast } from 'sonner'
+import TasktCreation from './TaskCreation'
+import { Button } from '@/components/ui/button'
 
 type Task={
     id: string,
@@ -21,7 +23,7 @@ export default function ListTasks({tasks}:{tasks:Task[]}) {
     const [clicked,SetClicked]=useState(-1);
     const [clicked2,SetClicked2]=useState(-1);
     const [tasks_list,setTasks]=useState<Task[]>(tasks);
-
+    const [addingTask,setAddingTask]=useState(false)
     const completeItem=(index:number)=>{
         const list=[]
         for(let i=0;i<tasks_list.length;i++){
@@ -72,64 +74,81 @@ export default function ListTasks({tasks}:{tasks:Task[]}) {
         }
     }
   return (
-        <div className='bg-white p-4 px-2 text-black scrolable h-50 w-full flex flex-col gap-3 rounded-xl overflow-auto '>
-            {[...tasks_list].map((item,index) => {
-                return (
-                        <div key={index} className='bg-gray-1 p-4 rounded-lg flex justify-between'>
-                            <div className='max-w-50'>
-                            {item.title} 
-                            </div>
-                                <div onClick={()=>{SetClicked2(index)}}>
-                                <Checkbox checked={tasks_list[index].completed}/>
+    <>
+        <div className='tasks flex flex-col gap-1'>
+
+            <div className='bg-white p-4 px-2 text-black scrolable h-50 w-full flex flex-col gap-3 rounded-xl overflow-auto '>
+                {[...tasks_list].map((item,index) => {
+                    return (
+                            <div key={index} className='bg-gray-1 p-4 rounded-lg flex justify-between'>
+                                <div className='max-w-50'>
+                                {item.title} 
                                 </div>
-                            <div>
-                                <Popover>
-                                    <PopoverTrigger>
-                                        <Image className='cursor-pointer'
-                                        alt='actions'
-                                        src={'/assets/more.svg'}
-                                        height={24}
-                                        width={24}
-                                        />
-                                    </PopoverTrigger>
-                                    <PopoverClose>
-                                        <PopoverContent className='p-2 flex flex-col gap-3 bg-gray-100 rounded-xl'>
-                                            <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
-                                            onClick={()=>{SetClicked(index)}}>
-                                                <Pen/>
-                                            </div>
-                                            <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
-                                                    onClick={()=>{deleteTask(index)}}>
-                                                <Trash/>
-                                            </div>
-                                            </PopoverContent>
-                                    </PopoverClose>
-                                </Popover>
+                                    <div onClick={()=>{SetClicked2(index)}}>
+                                    <Checkbox checked={tasks_list[index].completed}/>
+                                    </div>
+                                <div>
+                                    <Popover>
+                                        <PopoverTrigger>
+                                            <Image className='cursor-pointer'
+                                            alt='actions'
+                                            src={'/assets/more.svg'}
+                                            height={24}
+                                            width={24}
+                                            />
+                                        </PopoverTrigger>
+                                        <PopoverClose>
+                                            <PopoverContent className='p-2 flex flex-col gap-3 bg-gray-100 rounded-xl'>
+                                                <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
+                                                onClick={()=>{SetClicked(index)}}>
+                                                    <Pen/>
+                                                </div>
+                                                <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
+                                                        onClick={()=>{deleteTask(index)}}>
+                                                    <Trash/>
+                                                </div>
+                                                </PopoverContent>
+                                        </PopoverClose>
+                                    </Popover>
+                                </div>
                             </div>
-                        </div>
-                )})}
-                <div>
-                {(clicked2>=0)&&(
-                    <TasktCompletion
-                    isOpen={clicked2>=0}
-                    closeDialog={()=>{SetClicked2(-1)}}
-                    onClose={()=>{SetClicked2(-1)}}
-                    handleSubmit={()=>{completeItem(clicked2)}}
-                    tasks={tasks_list}
-                    index={clicked2}
-                    />
-                )}
-                {clicked>=0&&(
-                    <TasktActions
-                    isOpen={clicked>=0}
-                    closeDialog={()=>{SetClicked(-1)}}
-                    onClose={()=>{SetClicked(-1)}}
-                    tasks={tasks_list}
-                    index={clicked}
-                    />
-                )}
-                </div>
+                    )})}
+                    <div>
+                    {(clicked2>=0)&&(
+                        <TasktCompletion
+                        isOpen={clicked2>=0}
+                        closeDialog={()=>{SetClicked2(-1)}}
+                        onClose={()=>{SetClicked2(-1)}}
+                        handleSubmit={()=>{completeItem(clicked2)}}
+                        tasks={tasks_list}
+                        index={clicked2}
+                        />
+                    )}
+                    {clicked>=0&&(
+                        <TasktActions
+                        isOpen={clicked>=0}
+                        closeDialog={()=>{SetClicked(-1)}}
+                        onClose={()=>{SetClicked(-1)}}
+                        tasks={tasks_list}
+                        index={clicked}
+                        />
+                    )}
+                    </div>
+            </div>
+
+            <div className='flex gap-2 justify-around w-full'>
+                <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setAddingTask(true)}}><Plus/></Button>
+                <Button className='bg-gray-1 cursor-pointer w-50'><CheckCheckIcon/></Button>
+            </div>
         </div>
+
+        <TasktCreation
+            isOpen={addingTask}
+            handleCreation={(created:Task)=>{setTasks([...tasks,created])}}
+            onClose={()=>{setAddingTask(false)}}
+            closeDialog={()=>{setAddingTask(false)}}
+        />
+    </>
     
   )
 }

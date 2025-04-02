@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     
     try {
         const { title, description,project_id } = await req.json();
-        const response =createTask({
+        const response = await createTask({
             data:{
                 title:title,
                 project_id:project_id,

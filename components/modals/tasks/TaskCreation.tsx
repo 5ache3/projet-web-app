@@ -5,13 +5,23 @@ import { Dialog, DialogContent, DialogTitle } from '../../ui/dialog'
 import { Button } from '../../ui/button'
 import { toast } from 'sonner'
 import { useParams, useRouter } from 'next/navigation'
+
+type Task={
+  id: string,
+  title: string,
+  project_id: string,
+  description: string,
+  created_at: Date,
+  completed: boolean
+}
+
 interface promps{
     isOpen:boolean
     onClose?:()=>void
-    handleClick?:()=>void
+    handleCreation?:(created:Task)=>void
     closeDialog:()=>void
 }
-export default function TasktCreation({isOpen,onClose,handleClick,closeDialog}:promps) {
+export default function TasktCreation({isOpen,onClose,handleCreation,closeDialog}:promps) {
     const [name,setName]=useState('');
     const [description,setDescription]=useState('');
     const params = useParams();
@@ -38,7 +48,9 @@ export default function TasktCreation({isOpen,onClose,handleClick,closeDialog}:p
                 },
                 body: JSON.stringify(data),
               });
-            
+              const created=await response.json()
+              handleCreation(created)
+              
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
               }else{

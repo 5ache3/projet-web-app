@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from '../../ui/button'
-import { CheckCheckIcon, Pen, Plus, Share2 } from 'lucide-react'
-import TasktCreation from '../tasks/TaskCreation'
+import { Pen,Share2 } from 'lucide-react'
 import ProjectCreation from './ProjectCreation'
 import ListTasks from '../tasks/ListTasks'
 import ShareProject from './ShareProject'
@@ -31,7 +29,6 @@ type Project={
   }
 
 export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
-    const [addingTask,setAddingTask]=useState(false)
     const [editingProject,setEditingProject]=useState(false)
     const [sharingProject,setSharingProject]=useState(false)
   return (
@@ -91,19 +88,8 @@ export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
                 {data?.p.description}
               </div>
             </div>
-            <div className='tasks flex flex-col gap-1'>
-              <ListTasks tasks={tasks}/>
-              <div className='flex gap-2 justify-around w-full'>
-                  <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setAddingTask(true)}}><Plus/></Button>
-                  <Button className='bg-gray-1 cursor-pointer w-50'><CheckCheckIcon/></Button>
-              </div>
-      </div>
+            <ListTasks tasks={tasks}/>
           </div>
-          <TasktCreation
-            isOpen={addingTask}
-            onClose={()=>{setAddingTask(false)}}
-            closeDialog={()=>{setAddingTask(false)}}
-          />
         </div>
   )
 }
