@@ -42,8 +42,14 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  /* 
+  #11013c
+  #0b0029
+  #0c051f
+  */
   --color-dark-1:#161925;
-  --color-dark-2:#1C1F2E;
+  --color-dark-2:#1C1F2D;
+  /* --color-dark-2:#1C1F2E; */
   --color-light-1:#FFFFFF;
   --color-light-2:#EFEFEF;
   --color-gray-1:#697C89;
@@ -67,9 +73,9 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  /* --border: oklch(0.922 0 0); */
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* --ring: oklch(0.708 0 0); */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
