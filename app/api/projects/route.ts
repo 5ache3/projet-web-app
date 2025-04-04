@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { createRelation } from "@/lib/actions/project.actions";
+import { createProject, createRelation } from "@/lib/actions/project.actions";
 
 const prisma = new PrismaClient();
 
@@ -8,17 +8,14 @@ export async function POST(req: Request) {
     try {
         const { title, description, deadline, owner_id } = await req.json();
         
-        const newProject = await prisma.projet.create({
-            data: {
-                title,
-                description: description || null,
-                deadline: deadline ? new Date(deadline) : null,
-                owner_id,
-            },
-        });
-        const project_id=newProject.id;
+        const data= {
+            title,
+            description: description || null,
+            deadline: deadline ? new Date(deadline) : null,
+            owner_id,
+        }
+        const response = await createProject({data})
         
-        const response =createRelation(owner_id,project_id);
         return NextResponse.json(response, { status: 201 });
     } catch (error: unknown) {
         if (error instanceof Error) {

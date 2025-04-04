@@ -1,5 +1,5 @@
-import { createRelation, findProject, findRelation, GetListProjects, getProject } from "@/lib/actions/project.actions";
-import { error } from "console";
+import { createRelation, deleteProject, findProject, findRelation, GetListProjects, getProject } from "@/lib/actions/project.actions";
+
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request,{ params }:{ params: { [key: string]: string } }) {
@@ -33,3 +33,17 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: error }, { status: 500 })
     }
 }
+export async function DELETE(req: Request) {
+    try{
+        const { project_id,user_id}= await req.json();
+        const projet = await findProject({id:project_id})
+        if(projet[0].owner_id===user_id){
+            const response= await deleteProject({id:project_id})
+            return NextResponse.json(response)
+        }
+    }catch(error){
+        console.log(error)
+        return NextResponse.json({ error: error }, { status: 500 })
+    }
+}
+

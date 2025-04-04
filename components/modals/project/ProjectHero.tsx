@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Pen,Share2 } from 'lucide-react'
+import { Pen,Share2, Trash } from 'lucide-react'
 import ProjectCreation from './ProjectCreation'
 import ListTasks from '../tasks/ListTasks'
 import ShareProject from './ShareProject'
 import { Popover } from '@/components/ui/popover'
 import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import Image from 'next/image'
+import ProjectDeletion from './ProjectDeletion'
+import { useUser } from '@clerk/nextjs'
 
 type Project={
     p:{
@@ -28,8 +30,12 @@ type Project={
     completed: boolean
   }
 
-export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
+export default function ProjectHero({data,tasks}:{data:Project,tasks:Task[]}) {
+  
+    const { user } = useUser();
+    const u_id=user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX'
     const [editingProject,setEditingProject]=useState(false)
+    const [deletingProject,setDeletingProject]=useState(false)
     const [sharingProject,setSharingProject]=useState(false)
   return (
     <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-dark-1  md:m-auto'>
@@ -46,7 +52,7 @@ export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
                     />
                 </PopoverTrigger>
 
-                <PopoverContent className='p-2 flex flex-col gap-3'>
+                <PopoverContent  className='p-2 flex flex-col gap-3 bg-gray-100 rounded-xl'>
                   <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
                         onClick={()=>{setEditingProject(true)}}>
                     <Pen/>
@@ -55,6 +61,12 @@ export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
                           onClick={()=>{setSharingProject(true)}}>
                     <Share2/>
                   </div>
+                  {u_id===data.p.owner_id&&(
+                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                          onClick={()=>{setDeletingProject(true)}}>
+                    <Trash/>
+                  </div>
+                  )}
                 </PopoverContent>
               </Popover>
               <div>
@@ -73,7 +85,13 @@ export default function ProjectHero({data,tasks}:{data?:Project,tasks:Task[]}) {
                 id={data?.p.id}
                 title={data?.p.title}
                 />
-
+                <ProjectDeletion
+                isOpen={deletingProject}
+                closeDialog={()=>{setDeletingProject(false)}}
+                onClose={()=>{setDeletingProject(false)}}
+                handleSubmit={()=>{setDeletingProject(false)}}
+                p_id={data.p.id}
+                />
               </div>
 
             </div>
