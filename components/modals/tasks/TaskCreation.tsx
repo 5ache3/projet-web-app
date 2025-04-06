@@ -18,7 +18,7 @@ type Task={
 interface promps{
     isOpen:boolean
     onClose?:()=>void
-    handleCreation?:(created:Task)=>void
+    handleCreation:(created:Task)=>void
     closeDialog:()=>void
 }
 export default function TasktCreation({isOpen,onClose,handleCreation,closeDialog}:promps) {

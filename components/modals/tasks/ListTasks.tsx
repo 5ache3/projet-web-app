@@ -144,7 +144,7 @@ export default function ListTasks({tasks}:{tasks:Task[]}) {
 
         <TasktCreation
             isOpen={addingTask}
-            handleCreation={(created:Task)=>{setTasks([...tasks,created])}}
+            handleCreation={(created:Task)=>{setTasks([...tasks_list,created])}}
             onClose={()=>{setAddingTask(false)}}
             closeDialog={()=>{setAddingTask(false)}}
         />
