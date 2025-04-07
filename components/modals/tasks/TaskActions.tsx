@@ -6,6 +6,7 @@ import { Button } from '../../ui/button'
 import { toast } from 'sonner'
 import { useParams} from 'next/navigation'
 import { Checkbox } from '@radix-ui/react-checkbox'
+import { Task } from '@/constants/types'
 
 interface promps{
     isOpen:boolean
@@ -15,14 +16,7 @@ interface promps{
     index:number
     tasks:Task[]
 }
-type Task={
-    id: string,
-    title: string,
-    project_id: string,
-    description: string,
-    created_at: Date,
-    completed: boolean
-}
+
 
 export default function TasktActions({
     isOpen,

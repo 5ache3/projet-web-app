@@ -8,27 +8,9 @@ import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import Image from 'next/image'
 import ProjectDeletion from './ProjectDeletion'
 import { useUser } from '@clerk/nextjs'
+import { Project, Task } from '@/constants/types'
 
-type Project={
-    p:{
-      id:string
-      title:string
-      owner_id:string
-      created_at:Date
-      description:string
-      deadline:Date
-    }
-    t:number
-    c:number
-  }
-  type Task={
-    id: string,
-    title: string,
-    project_id: string,
-    description: string,
-    created_at: Date,
-    completed: boolean
-  }
+
 
 export default function ProjectHero({data,tasks}:{data:Project,tasks:Task[]}) {
   

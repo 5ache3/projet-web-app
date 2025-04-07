@@ -9,15 +9,8 @@ import { PopoverClose, PopoverContent } from '@radix-ui/react-popover'
 import { toast } from 'sonner'
 import TasktCreation from './TaskCreation'
 import { Button } from '@/components/ui/button'
+import { Task } from '@/constants/types'
 
-type Task={
-    id: string,
-    title: string,
-    project_id: string,
-    description: string,
-    created_at: Date,
-    completed: boolean
-}
 
 export default function ListTasks({tasks}:{tasks:Task[]}) {
     const [clicked,SetClicked]=useState(-1);

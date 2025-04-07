@@ -1,29 +1,12 @@
 'use client'
 import ProjectHero from '@/components/modals/project/ProjectHero';
+import { Project, Task } from '@/constants/types';
 import { useUser } from '@clerk/nextjs';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
-type Project={
-  p:{
-    id:string
-    title:string
-    owner_id:string
-    created_at:Date
-    description:string
-    deadline:Date
-  }
-  t:number
-  c:number
-}
-type Task={
-  id: string,
-  title: string,
-  project_id: string,
-  description: string,
-  created_at: Date,
-  completed: boolean
-}
+
+
 export default function page() {
   const [isloading,setLoading]=useState(true)
   const { user } = useUser();

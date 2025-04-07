@@ -18,7 +18,6 @@ function HomeLayout({children}:{children:ReactNode}) {
               </section>
           </div>
       </main>
-      <Bottombar/>
     </>
   )
 }

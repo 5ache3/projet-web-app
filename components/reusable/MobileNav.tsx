@@ -27,7 +27,7 @@ export default function MobileNav() {
                 alt='humberger icon'
                 height={35}
                 width={35}
-                className='cursor-pointer sm:hidden'
+                className='cursor-pointer md:hidden'
                 />
             </SheetTrigger>
             <SheetContent color='dark' side='left' className='bg-mainbg-1 p-3'>
