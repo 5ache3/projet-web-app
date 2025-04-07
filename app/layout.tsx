@@ -45,7 +45,7 @@ export default function RootLayout({
           },
         }}
       >
-        <body className={` antialiased bg-dark-1`}>
+        <body className='dark'>
           {children}
           <Toaster></Toaster>
         </body>

@@ -1,4 +1,4 @@
-import { Check, CheckCheckIcon, Delete, DeleteIcon, Pen, Plus, Share2, Trash } from 'lucide-react'
+import {CheckCheckIcon, Pen, Plus, Trash } from 'lucide-react'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Checkbox } from '../../ui/checkbox'

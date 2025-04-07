@@ -30,7 +30,7 @@ export default function MobileNav() {
                 className='cursor-pointer sm:hidden'
                 />
             </SheetTrigger>
-            <SheetContent color='dark' side='left' className='bg-dark-1 p-3'>
+            <SheetContent color='dark' side='left' className='bg-mainbg-1 p-3'>
             <VisuallyHidden>
                 <SheetTitle>Navigation Menu</SheetTitle>
             </VisuallyHidden>

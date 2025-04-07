@@ -121,7 +121,7 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Create Project</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-dark-2 w-full  text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-full  text-white'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
@@ -150,7 +150,7 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
                 <div>
                     <CalendarForm handleChange={(value:Date|undefined)=>{setDate(value)}} date={date}/>
                 </div>
-                <Button className='bg-white text-dark-1 font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
+                <Button className='bg-white text-black font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
             </form>
         </DialogContent>
     </Dialog>

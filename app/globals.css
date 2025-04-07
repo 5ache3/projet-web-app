@@ -47,11 +47,10 @@
   #0b0029
   #0c051f
   */
-  --color-dark-1:#161925;
-  --color-dark-2:#1C1F2D;
-  /* --color-dark-2:#1C1F2E; */
-  --color-light-1:#FFFFFF;
-  --color-light-2:#EFEFEF;
+  --color-mainbg-1 :var(--mainbg-1);
+  --color-mainbg-2 :var(--mainbg-2);
+  /* --color-mainbg-1 :#161925;
+  --color-mainbg-2:#1C1F2D; */
   --color-gray-1:#697C89;
   --breakpoint-xs: 400px
 }
@@ -91,7 +90,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
+/* .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -123,10 +122,14 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
+} */
 
+.dark{
+  --mainbg-1 :#161925;
+  --mainbg-2:#1C1F2D;
+}
 .bottombar {
-  @apply fixed bottom-0 z-10 w-full rounded-t-3xl p-4 bg-dark-1 sm:px-7 md:hidden;
+  @apply fixed bottom-0 z-10 w-full rounded-t-3xl p-4 bg-mainbg-1 sm:px-7 md:hidden;
 }
 
 .bottombar_container {

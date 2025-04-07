@@ -6,7 +6,7 @@ import { SignedIn, SignIn, UserButton } from '@clerk/nextjs'
 
 export default function Navbar() {
   return (
-    <nav className='flex justify-between z-50 fixed w-full p-3 bg-dark-1  '>
+    <nav className='flex justify-between z-50 fixed w-full p-3 bg-mainbg-1  '>
       <Link
       href='/'
       className='flex items-center gap-3'

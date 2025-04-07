@@ -67,7 +67,7 @@ export default function TasktCompletion({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Complete Task</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-dark-2 w-80 text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-80 text-white'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
@@ -88,7 +88,7 @@ export default function TasktCompletion({
                         ></textarea> 
                     </div>
                     <Checkbox/>   
-                <Button className='bg-white text-dark-1 font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
+                <Button className='bg-white text-black font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
             </form>
         </DialogContent>
     </Dialog>

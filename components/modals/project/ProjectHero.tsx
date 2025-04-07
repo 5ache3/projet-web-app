@@ -38,7 +38,7 @@ export default function ProjectHero({data,tasks}:{data:Project,tasks:Task[]}) {
     const [deletingProject,setDeletingProject]=useState(false)
     const [sharingProject,setSharingProject]=useState(false)
   return (
-    <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-dark-1  md:m-auto'>
+    <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-mainbg-1  md:m-auto'>
           <div className='m-1 w-full flex justify-between'>
             <div></div>
             <div className='text-gray-1 flex gap-5'>
