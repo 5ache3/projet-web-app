@@ -45,7 +45,7 @@ export default function RootLayout({
           },
         }}
       >
-        <body className='dark'>
+        <body className='dark bg-mainbg-1'>
           {children}
           <Toaster></Toaster>
         </body>

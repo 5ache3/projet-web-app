@@ -66,14 +66,18 @@ export async function getProject({id}:{id:string}) {
         const project=await prisma.projet.findFirst({
             where:{id}
         })
-        const count_tot=await prisma.task.findMany({
+        const tasks=await prisma.task.findMany({
             where: {project_id:id}
         })
-        const count_comp=await prisma.task.findMany({
-            where: {project_id:id,completed:true}
+
+        const users=await prisma.user_Project.findMany({
+            where:{project_id:id}
         })
 
-        return {p:project,t:count_tot.length,c:count_comp.length}
+        const count_tot=tasks.length;
+        let count_comp=0;
+        tasks.map(item => { if (item.completed) count_comp += 1; })
+        return {p:project,t:count_tot,c:count_comp,tasks,users}
     }catch(error){
         console.log(error)
     }

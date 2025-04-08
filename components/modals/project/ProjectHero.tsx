@@ -12,7 +12,7 @@ import { Project, Task } from '@/constants/types'
 
 
 
-export default function ProjectHero({data,tasks}:{data:Project,tasks:Task[]}) {
+export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[],role:string}) {
   
     const { user } = useUser();
     const u_id=user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX'

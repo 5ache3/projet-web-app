@@ -14,6 +14,7 @@ export default function page() {
 
   const [data,setData]=useState<Project>()
   const [tasks,setTasks]=useState<Task[]>([])
+  const [userRole,setUserRole]=useState('')
   const params = useParams();
   const id=params.id;
 
@@ -22,35 +23,43 @@ export default function page() {
       try {
         const data = await fetch(`/api/projects/${id}`);
         const project = await data?.json()
-        setData(project)
+        if(project){
+          setData(project)
+          setTasks(project.tasks)
+        }
+
         setLoading(false)
       } catch (error) {
         console.error("Error", error);
       }
     };
-    const fetchTasks = async ()=>{
-      try{
-        const data = await fetch(`/api/projects/${id}/tasks`);
-        const response = await data.json();
-        setTasks(response);
-      }catch(error){
-        console.error("Error ",error);
+    const getUserRole = async ()=>{
+      if(!data){
+        return
+      }
+      for(let i=0;i<data.users.length;i++){
+        if(data.users[i].user_id===user_id){
+          setUserRole(data.users[i].role)
+          return
+        }
       }
     }
     fetchProjects();
-    fetchTasks();
   }, [id]);
 
   if(isloading){
     return (<>Loading...</>)
   }else{
-    return (
-      <section>
-        <ProjectHero
-         data={data}
-         tasks={tasks}
-         />
-      </section>
-    )
+    if(data){
+      return (
+        <section>
+          <ProjectHero
+           data={data}
+           tasks={tasks}
+           role={userRole}
+           />
+        </section>
+      )
+    }
   }
 }
