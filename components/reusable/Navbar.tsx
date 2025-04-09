@@ -16,6 +16,7 @@ export default function Navbar() {
         alt='logo'
         width={30}
         height={30}
+        className='logo-svg'
         />
         <p className='font-semibold max-xs:hidden text-gray-200'>MyApp</p>
       </Link>

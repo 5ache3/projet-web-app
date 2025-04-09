@@ -10,15 +10,15 @@ export const sidebarLinks=[
         route:'/projects',
         icon:'/assets/share.svg',
     },
-    {
-        label:'Profile',
-        route:'/profile',
-        icon:'/assets/user.svg',
-    },
-    {
-        label:'Notifications',
-        route:'/notifications',
-        icon:'/assets/heart.svg',
-    },
+    // {
+    //     label:'Profile',
+    //     route:'/profile',
+    //     icon:'/assets/user.svg',
+    // },
+    // {
+    //     label:'Notifications',
+    //     route:'/notifications',
+    //     icon:'/assets/heart.svg',
+    // },
 ]
 

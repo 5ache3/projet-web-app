@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react'
 export default function page() {
   const [isloading,setLoading]=useState(true)
   const { user } = useUser();
-  const user_id = user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
+  const user_id = user?.id;
 
   const [data,setData]=useState<Project>()
   const [tasks,setTasks]=useState<Task[]>([])
@@ -26,6 +26,12 @@ export default function page() {
         if(project){
           setData(project)
           setTasks(project.tasks)
+          for(let i=0;i<project.users.length;i++){
+            if(project.users[i].user_id===user_id){
+              setUserRole(project.users[i].role)
+              break
+            }
+          }
         }
 
         setLoading(false)
@@ -44,6 +50,7 @@ export default function page() {
         }
       }
     }
+
     fetchProjects();
   }, [id]);
 

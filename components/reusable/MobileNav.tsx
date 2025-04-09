@@ -39,6 +39,7 @@ export default function MobileNav() {
                     <Image
                     src='/assets/logo.svg'
                     alt='logo'
+                    className='logo-svg'
                     width={30}
                     height={30}
                     />

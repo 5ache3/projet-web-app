@@ -24,6 +24,7 @@ export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[]
           <div className='m-1 w-full flex justify-between'>
             <div></div>
             <div className='text-gray-1 flex gap-5'>
+              {role&&(
               <Popover>
                 <PopoverTrigger asChild>
                   <Image className='cursor-pointer'
@@ -51,6 +52,7 @@ export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[]
                   )}
                 </PopoverContent>
               </Popover>
+              )}
               <div>
                 <ProjectCreation isOpen={editingProject}
                   closeDialog={()=>{setEditingProject(false)}}
@@ -88,7 +90,7 @@ export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[]
                 {data?.p.description}
               </div>
             </div>
-            <ListTasks tasks={tasks}/>
+            <ListTasks tasks={tasks} role={role}/>
           </div>
         </div>
   )

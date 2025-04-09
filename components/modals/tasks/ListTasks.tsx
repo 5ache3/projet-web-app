@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Task } from '@/constants/types'
 
 
-export default function ListTasks({tasks}:{tasks:Task[]}) {
+export default function ListTasks({tasks,role}:{tasks:Task[],role:string}) {
     const [clicked,SetClicked]=useState(-1);
     const [clicked2,SetClicked2]=useState(-1);
     const [tasks_list,setTasks]=useState<Task[]>(tasks);
@@ -76,11 +76,15 @@ export default function ListTasks({tasks}:{tasks:Task[]}) {
                             <div key={index} className='bg-gray-1 p-4 rounded-lg flex justify-between'>
                                 <div className='max-w-50'>
                                 {item.title} 
+
                                 </div>
+                                {role&&(
                                     <div onClick={()=>{SetClicked2(index)}}>
                                     <Checkbox checked={tasks_list[index].completed}/>
                                     </div>
+                                )}
                                 <div>
+                                    {role&&(
                                     <Popover>
                                         <PopoverTrigger>
                                             <Image className='cursor-pointer'
@@ -103,6 +107,7 @@ export default function ListTasks({tasks}:{tasks:Task[]}) {
                                                 </PopoverContent>
                                         </PopoverClose>
                                     </Popover>
+                                    )}
                                 </div>
                             </div>
                     )})}
@@ -130,8 +135,9 @@ export default function ListTasks({tasks}:{tasks:Task[]}) {
             </div>
 
             <div className='flex gap-2 justify-around w-full'>
-                <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setAddingTask(true)}}><Plus/></Button>
-                <Button className='bg-gray-1 cursor-pointer w-50'><CheckCheckIcon/></Button>
+                {role&&(
+                    <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setAddingTask(true)}}><Plus/></Button>
+                )}
             </div>
         </div>
 

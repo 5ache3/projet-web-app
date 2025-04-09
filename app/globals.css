@@ -169,7 +169,7 @@
   background-color: #d4431f;
   /* background-color: #16FEE3; */
 }
-.cl-providerIcon__github{
+.cl-providerIcon__github,.logo-svg{
   filter: invert(1);
 }
 .cl-userButtonPopoverActionButton{
