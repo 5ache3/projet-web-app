@@ -28,7 +28,6 @@ export default function page() {
         try {
           const data = await fetch(`/api/user/${id}/projects`);
           const projects = await data?.json()
-          console.log(projects);
           setListProjects(projects);
         } catch (error) {
           console.error("Error fetching projects:", error);
@@ -40,38 +39,17 @@ export default function page() {
     <div className='text-white'>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
             {listProjects.map((item,index) => (
-
               <ProjectCard 
               key={index}
               title={item.p.title}
               color={cards[index%cards.length]}
               total={item.t}
               completed={item.c}
+              date={item.p.deadline}
               handleClick={()=>{router.push(`/projects/${item.p.id}`)}}
               />
               
             ))}
-
-                {/*
-                <ProjectCard 
-                title='Next JS'
-                color='card-4'
-                total={7}
-                completed={6}
-                />
-                <ProjectCard 
-                title='prog mobile'
-                color='card-2'
-                total={8}
-                completed={6}
-                />
-                <ProjectCard 
-                title='Next JS'
-                color='card-3'
-                total={12}
-                completed={9}
-                /> */}
-
               </div>
     </div>
   )

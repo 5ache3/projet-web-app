@@ -41,7 +41,6 @@ export default function RootLayout({
             colorBackground:"#1C1F2E",
             colorInputBackground:"#252a41",
             colorInputText:'#fff',
-            
           },
         }}
       >
