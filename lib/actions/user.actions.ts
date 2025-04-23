@@ -13,6 +13,17 @@ export async function createUser({data}:{data:User}) {
     }
 }
 
+export async function getUser({id}:{id:string}) {
+    
+    try{
+        const user=await prisma.user.findFirst({
+            where:{id}
+        })
+        return user
+    }catch(error){
+        console.log(error)
+    }
+}
 export async function deleteUser({id}:{id:string}) {
     try{
         const user=await prisma.user.delete({

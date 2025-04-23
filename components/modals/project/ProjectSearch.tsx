@@ -14,7 +14,7 @@ interface promps{
 export default function ProjectSearch({isOpen,onClose,closeDialog,handleClick}:promps) {
     const { user } = useUser();
     const [projectId,setProjectId]=useState('');
-    const id=user?.id||'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
+    const id=user?.id ;
 
     const joinProject = async ()=>{
         closeDialog();

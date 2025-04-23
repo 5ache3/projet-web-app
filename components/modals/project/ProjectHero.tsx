@@ -9,13 +9,14 @@ import Image from 'next/image'
 import ProjectDeletion from './ProjectDeletion'
 import { useUser } from '@clerk/nextjs'
 import { Project, Task } from '@/constants/types'
+import ListUsers from './ListUsers'
 
 
 
 export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[],role:string}) {
   
     const { user } = useUser();
-    const u_id=user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX'
+    const u_id=user?.id  
     const [editingProject,setEditingProject]=useState(false)
     const [deletingProject,setDeletingProject]=useState(false)
     const [sharingProject,setSharingProject]=useState(false)
@@ -85,12 +86,14 @@ export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[]
               <span className='text-gray-1'>Nom: </span>{data?.p.title}
             </div>
             <div className='flex flex-col '>
+              
               <span className='text-gray-1'>description: </span>
               <div className='mx-4'>
                 {data?.p.description}
               </div>
             </div>
             <ListTasks tasks={tasks} role={role}/>
+            <ListUsers users={data.users}/>
           </div>
         </div>
   )

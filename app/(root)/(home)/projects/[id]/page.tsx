@@ -52,7 +52,7 @@ export default function page() {
     }
 
     fetchProjects();
-  }, [id]);
+  }, [id,user_id]);
 
   if(isloading){
     return (<>Loading...</>)

@@ -70,7 +70,7 @@ export default function ListTasks({tasks,role}:{tasks:Task[],role:string}) {
     <>
         <div className='tasks flex flex-col gap-1'>
 
-            <div className='bg-white p-4 px-2 text-black scrolable h-50 w-full flex flex-col gap-3 rounded-xl overflow-auto '>
+            <div className='bg-white p-4 px-2 text-black scrolable h-50 w-full flex flex-col gap-3 rounded-md overflow-auto '>
                 {[...tasks_list].map((item,index) => {
                     return (
                             <div key={index} className='bg-gray-1 p-4 rounded-lg flex justify-between'>

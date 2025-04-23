@@ -23,7 +23,7 @@ export default function ProjectDeletion({isOpen,p_id,
     const [message,setMessage]=useState('');
     const [checked,setChecked]=useState(false)
     const { user } = useUser();
-    const u_id=user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX'
+    const u_id=user?.id  
     const onSubmit = async () => {
         if(!checked){
             toast.error("please confirm")

@@ -1,3 +1,7 @@
+import { User_Project } from "@prisma/client"
+
+
+
 type Project={
     p:{
       id:string
@@ -10,12 +14,7 @@ type Project={
     t:number
     c:number
     tasks:Task[]
-    users:{
-      id: string
-      user_id: string
-      project_id: string
-      role: string
-    }[]
+    users:User_Project[]
 }
 
 type Task={

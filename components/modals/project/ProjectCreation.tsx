@@ -24,7 +24,7 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
     const [description,setDescription]=useState(Description||'');
     const router=useRouter()
     const { user } = useUser();
-    const id=user?.id||'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
+    const id=user?.id ;
 
     const createProject = async () => {
         closeDialog();

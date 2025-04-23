@@ -20,7 +20,7 @@ export default function page() {
     const { user } = useUser();
     const [listProjects, setListProjects] = useState<project[]>([]); 
     const cards=['card-1','card-2','card-3','card-4',]
-    const id = user?.id || 'user_2ur3IAd0kdkdfAd4mC7lREJcYyX';
+    const id = user?.id  ;
     const router = useRouter()
     
     useEffect(() => {
