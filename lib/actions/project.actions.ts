@@ -118,3 +118,10 @@ export async function updateProject({data,id}:{data:Omit<Projet,'created_at'|'id
         console.log(error)
     }
 }
+
+export async function deleteProjectUserRelation({user_id,project_id}:{user_id:string,project_id:string}) {
+    const deleteRelation= await prisma.user_Project.deleteMany({
+        where:{project_id,user_id}
+    });
+    return deleteRelation
+}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Pen,Share2, Trash } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { LogOut, Pen,Share2, Trash } from 'lucide-react'
 import ProjectCreation from './ProjectCreation'
 import ListTasks from '../tasks/ListTasks'
 import ShareProject from './ShareProject'
@@ -10,22 +10,44 @@ import ProjectDeletion from './ProjectDeletion'
 import { useUser } from '@clerk/nextjs'
 import { Project, Task } from '@/constants/types'
 import ListUsers from './ListUsers'
+import ProjectJoiningPopover from './ProjectJoiningPopover'
+import LeaveProject from './LeaveProject'
 
 
 
-export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[],role:string}) {
+export default function ProjectHero({data,tasks}:{data:Project,tasks:Task[]}) {
   
     const { user } = useUser();
-    const u_id=user?.id  
-    const [editingProject,setEditingProject]=useState(false)
-    const [deletingProject,setDeletingProject]=useState(false)
-    const [sharingProject,setSharingProject]=useState(false)
+    const u_id=user?.id;
+    const [editingProject,setEditingProject]=useState(false);
+    const [deletingProject,setDeletingProject]=useState(false);
+    const [sharingProject,setSharingProject]=useState(false);
+    const [leavingProject,setLeavingProject]=useState(false);
+    
+    const [userRole,setUserRole]=useState('')
+
+    const [isProjectJoined,setIsProjectJoined]=useState(userRole.length>0);
+    useEffect(()=>{
+      const getUserRole = async ()=>{
+        if(!data){
+          return
+        }
+        for(let i=0;i<data.users.length;i++){
+          if(data.users[i].user_id.trim()===u_id?.trim()){
+            setUserRole(data.users[i].role);
+            setIsProjectJoined(userRole.length>0);
+            break
+          }
+        }
+      }
+      getUserRole();
+    },[userRole])
   return (
     <div className='m-0 p-6 md:px-10 px-4 rounded-xl bg-mainbg-1  md:m-auto'>
           <div className='m-1 w-full flex justify-between'>
             <div></div>
             <div className='text-gray-1 flex gap-5'>
-              {role&&(
+              {userRole&&(
               <Popover>
                 <PopoverTrigger asChild>
                   <Image className='cursor-pointer'
@@ -51,10 +73,28 @@ export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[]
                     <Trash/>
                   </div>
                   )}
+                  {u_id!==data.p.owner_id&&(
+                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                          onClick={()=>{setLeavingProject(true)}}>
+                    <LogOut/>
+                  </div>
+                  )}
                 </PopoverContent>
               </Popover>
               )}
               <div>
+                <ProjectJoiningPopover
+                  isOpen={!isProjectJoined}
+                  project_id={data.p.id}
+                  title={data.p.title}
+                  description={data.p.description}
+                  onClose={()=>{setIsProjectJoined(true)}}
+                />
+                <LeaveProject
+                isOpen={leavingProject}
+                project_id={data.p.id}
+                onClose={()=>{setLeavingProject(false)}}
+                />
                 <ProjectCreation isOpen={editingProject}
                   closeDialog={()=>{setEditingProject(false)}}
                   onClose={()=>{setEditingProject(false)}}
@@ -92,7 +132,7 @@ export default function ProjectHero({data,tasks,role}:{data:Project,tasks:Task[]
                 {data?.p.description}
               </div>
             </div>
-            <ListTasks tasks={tasks} role={role}/>
+            <ListTasks tasks={tasks} role={userRole}/>
             <ListUsers users={data.users}/>
           </div>
         </div>

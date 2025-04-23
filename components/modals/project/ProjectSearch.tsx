@@ -40,8 +40,10 @@ export default function ProjectSearch({isOpen,onClose,closeDialog,handleClick}:p
                 return
             }
             toast.success("joined ")
-        }catch{
-
+        }catch(error){
+            if(error){
+                toast.error(`${error}`)
+            }
         }
     }
     const onSubmit = ()=>{

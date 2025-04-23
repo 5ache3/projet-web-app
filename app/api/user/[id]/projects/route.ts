@@ -1,4 +1,4 @@
-import { createRelation, deleteProject, findProject, findRelation, GetListProjects, getProject } from "@/lib/actions/project.actions";
+import { createRelation, deleteProject, deleteProjectUserRelation, findProject, findRelation, GetListProjects, getProject } from "@/lib/actions/project.actions";
 
 import { NextResponse } from "next/server";
 
@@ -39,6 +39,9 @@ export async function DELETE(req: Request) {
         const projet = await findProject({id:project_id})
         if(projet[0].owner_id===user_id){
             const response= await deleteProject({id:project_id})
+            return NextResponse.json(response)
+        }else{
+            const response= await deleteProjectUserRelation({user_id,project_id})
             return NextResponse.json(response)
         }
     }catch(error){
