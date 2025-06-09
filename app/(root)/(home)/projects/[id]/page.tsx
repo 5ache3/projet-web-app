@@ -1,55 +1,35 @@
-'use client'
 import ProjectHero from '@/components/modals/project/ProjectHero';
-import { Project, Task } from '@/constants/types';
-import { useUser } from '@clerk/nextjs';
-import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import { getProject } from '@/lib/actions/project.actions';
+import { currentUser } from '@clerk/nextjs/server';
 
+export default async function page({ params }: { params: { id: string } }) {
+  const id = await params.id;
+  const url = `http://localhost:3000/api/projects/${id}`.trim();
+  const user = await currentUser();
+  const u_id=user?.id;
+  let data;
+  try {
+    // const response = await fetch(url);
+    const response = await getProject({id});
 
-
-export default function page() {
-  const [isloading,setLoading]=useState(true)
-  const { user } = useUser();
-  const user_id = user?.id;
-
-  const [data,setData]=useState<Project>()
-  const [tasks,setTasks]=useState<Task[]>([])
-  const params = useParams();
-  const id=params.id;
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch(`/api/projects/${id}`);
-        const project = await response?.json()
-        if(project&&!data){
-          setData(project)
-          setTasks(project.tasks)
-          
-        }
-
-        setLoading(false)
-      } catch (error) {
-        console.error("Error", error);
-      }
-    };
+    data = await response;
     
-
-    fetchProjects();
-  }, []);
-
-  if(isloading){
-    return (<>Loading...</>)
-  }else{
-    if(data){
-      return (
-        <section>
-          <ProjectHero
-           data={data}
-           tasks={tasks}
-           />
-        </section>
-      )
-    }
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return null;
   }
+
+  if (data) {
+    return (
+      <section>
+        <ProjectHero
+          data={data}
+          tasks={data.tasks || []} 
+          u_id={u_id}
+        />
+      </section>
+    );
+  }
+
+  return null; 
 }

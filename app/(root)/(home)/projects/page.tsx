@@ -1,7 +1,6 @@
 'use client'
 import ProjectCard from '@/components/cards/ProjectCard'
 import ListProjectSkeletons from '@/components/reusable/ListProjectSkeletons';
-import { GetListProjects } from '@/lib/actions/project.actions'
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'

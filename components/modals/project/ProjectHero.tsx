@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 import { LogOut, Pen,Share2, Trash } from 'lucide-react'
 import ProjectCreation from './ProjectCreation'
@@ -7,18 +8,14 @@ import { Popover } from '@/components/ui/popover'
 import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import Image from 'next/image'
 import ProjectDeletion from './ProjectDeletion'
-import { useUser } from '@clerk/nextjs'
 import { Project, Task } from '@/constants/types'
 import ListUsers from './ListUsers'
 import ProjectJoiningPopover from './ProjectJoiningPopover'
 import LeaveProject from './LeaveProject'
 
 
-
-export default function ProjectHero({data,tasks}:{data:Project,tasks:Task[]}) {
+export default function ProjectHero({data,tasks,u_id}:{data:Project,tasks:Task[],u_id:string}) {
   
-    const { user } = useUser();
-    const u_id=user?.id;
     const [editingProject,setEditingProject]=useState(false);
     const [deletingProject,setDeletingProject]=useState(false);
     const [sharingProject,setSharingProject]=useState(false);
@@ -133,7 +130,7 @@ export default function ProjectHero({data,tasks}:{data:Project,tasks:Task[]}) {
               </div>
             </div>
             <ListTasks tasks={tasks} role={userRole}/>
-            <ListUsers users={data.users}/>
+            <ListUsers users={data.users} u_id={u_id} u_role={userRole}/>
           </div>
         </div>
   )

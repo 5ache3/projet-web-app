@@ -1,3 +1,4 @@
+'use client'
 import { Button } from '@/components/ui/button';
 import { DialogTitle,Dialog, DialogContent } from '@/components/ui/dialog';
 import { useUser } from '@clerk/nextjs';

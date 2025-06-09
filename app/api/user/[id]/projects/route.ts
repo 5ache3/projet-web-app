@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request,{ params }:{ params: { [key: string]: string } }) {
     try{
         const {id} = await params;
+        
         const data = await GetListProjects(id);
         return NextResponse.json(data);
     }catch(error){

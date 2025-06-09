@@ -1,6 +1,7 @@
 'use client'
 import ProjectCard from '@/components/cards/ProjectCard'
 import ListProjectSkeletons from '@/components/reusable/ListProjectSkeletons';
+import { Calendar } from '@/components/ui/calendar';
 import HomeActions from '@/components/ui/HomeActions'
 import { Project } from '@/constants/types';
 import { useUser } from '@clerk/nextjs';
@@ -41,7 +42,8 @@ function page() {
         <h1 className='text-white px-4 text-3xl font-semibold'>Projects</h1>
         
         {loading ? (
-          <ListProjectSkeletons nb={2} />
+          // <ListProjectSkeletons nb={2} />
+          <></>
         ) : (
           <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
             {listProjects.map((item, index) => (
