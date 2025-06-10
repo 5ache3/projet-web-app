@@ -9,21 +9,21 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 function page() {
-  
+
   const { user } = useUser();
-  const [listProjects, setListProjects] = useState<Project[]>([]); 
-  const [loading,setLoading]=useState(true);
-  const id = user?.id  ;
+  const id = user?.id;
+  const [listProjects, setListProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter()
-  const cards=['card-1','card-2','card-3','card-4',]
+  const cards = ['card-1', 'card-2', 'card-3', 'card-4',]
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const data = await fetch(`/api/user/${id}/projects`);
         const projects = await data?.json()
-        if(projects){
-          const lis=[]
-          for(let i=0;i<2&&i<projects.length;i++){
+        if (projects) {
+          const lis = []
+          for (let i = 0; i < 2 && i < projects.length; i++) {
             lis.push(projects[i])
           }
           setListProjects(lis);
@@ -37,10 +37,10 @@ function page() {
   }, [id]);
   return (
     <section className='w-full bg-red text-white'>
-      <HomeActions/>
+      <HomeActions />
       <div className='p-3 projects bg-mainbg-1  rounded-2xl flex flex-col gap-6 mt-10'>
         <h1 className='text-white px-4 text-3xl font-semibold'>Projects</h1>
-        
+
         {loading ? (
           // <ListProjectSkeletons nb={2} />
           <></>
@@ -57,7 +57,7 @@ function page() {
                 handleClick={() => router.push(`/projects/${item.p.id}`)}
               />
             ))}
-        </div>
+          </div>
         )}
 
       </div>
