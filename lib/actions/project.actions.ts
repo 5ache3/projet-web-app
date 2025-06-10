@@ -1,5 +1,6 @@
+import { id } from 'date-fns/locale'
 import prisma from '../prisma'
-import {Projet} from '@prisma/client'
+import {Prisma, Projet} from '@prisma/client'
 
 type id_p={
     project_id:string
@@ -43,7 +44,6 @@ export async function createProject({data}:{ data: Omit<Projet, 'id' | 'created_
         console.log(error)
     }
 }
-
 export async function deleteProject({id}:{id:string}) {
 
     try{
@@ -82,7 +82,6 @@ export async function getProject({id}:{id:string}) {
         console.log(error)
     }
 }
-
 async function GetProjects(list:id_p[]) {
     const projects = [];
   
@@ -93,7 +92,6 @@ async function GetProjects(list:id_p[]) {
   
     return projects;
 }
-
 export async function GetListProjects(user_id:string) {
     try{
         const list=await prisma.user_Project.findMany({
@@ -105,8 +103,6 @@ export async function GetListProjects(user_id:string) {
         console.log(error)
     }
 }
-
-
 export async function updateProject({data,id}:{data:Omit<Projet,'created_at'|'id'>,id:string}) {
     try{
         const project=await prisma.projet.update({
@@ -118,10 +114,45 @@ export async function updateProject({data,id}:{data:Omit<Projet,'created_at'|'id
         console.log(error)
     }
 }
-
 export async function deleteProjectUserRelation({user_id,project_id}:{user_id:string,project_id:string}) {
     const deleteRelation= await prisma.user_Project.deleteMany({
         where:{project_id,user_id}
     });
     return deleteRelation
 }
+
+export async function getProjectNotiffs({u_id,p_id}:{u_id:string,p_id:string}) {
+    try{
+        const data=await prisma.notification.findMany({
+            where:{projetId:p_id,destinataireId:u_id}
+        })
+        return data
+    }catch(error){
+        console.log(error)
+    }
+}
+export async function getNotifications({u_id}:{u_id:string}) {
+    try{
+        const data=await prisma.notification.findMany({
+            where:{destinataireId:u_id}
+        })
+        return data
+    }catch(error){
+        console.log(error)
+    }
+    
+}
+type NotificationInput = Prisma.NotificationUncheckedCreateInput;
+
+export async function sendNotifications({data}:{data:NotificationInput}) {
+    try{
+        const response=await prisma.notification.create({
+            data:data
+        })
+        return response
+    }catch(error){
+        console.log(error)
+    }
+    
+}
+

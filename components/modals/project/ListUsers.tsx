@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { User, User_Project } from '@prisma/client';
 import MembersList from '@/components/lists/MembersList';
 
-export default function ListUsers({ users ,u_id,u_role}: { users: User_Project[] ,u_id:string,u_role?:string}) {
+export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User_Project[] ,u_id:string,u_role?:string,p_id:string}) {
   const [usersData, setUsersData] = useState<User[]>([]);
   const [listOpened,openList]=useState(false)
   useEffect(() => {
@@ -41,6 +41,7 @@ export default function ListUsers({ users ,u_id,u_role}: { users: User_Project[]
           <AvatarFallback>{user.name}</AvatarFallback>
         </Avatar>
       ))}
+      {(usersData&&usersData.length>0)&&(
       <Avatar className="relative cursor-pointer" onClick={()=>{openList(true)}}>
         <AvatarImage
           src="/icons/add.svg"
@@ -48,12 +49,15 @@ export default function ListUsers({ users ,u_id,u_role}: { users: User_Project[]
         />
         <AvatarFallback>more</AvatarFallback>
       </Avatar>
+
+      )}
       <MembersList 
       isOpen={listOpened}
       onClose={()=>{openList(false)}}
       users={usersData}
       u_id={u_id}
       u_role={u_role}
+      p_id={p_id}
       />
     </div>
   );

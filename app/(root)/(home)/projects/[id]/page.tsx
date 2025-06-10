@@ -3,7 +3,7 @@ import { getProject } from '@/lib/actions/project.actions';
 import { currentUser } from '@clerk/nextjs/server';
 
 export default async function page({ params }: { params: { id: string } }) {
-  const id = await params.id;
+  const id = params.id;
   const url = `http://localhost:3000/api/projects/${id}`.trim();
   const user = await currentUser();
   const u_id=user?.id;
@@ -26,6 +26,7 @@ export default async function page({ params }: { params: { id: string } }) {
           data={data}
           tasks={data.tasks || []} 
           u_id={u_id}
+          p_id={id}
         />
       </section>
     );

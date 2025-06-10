@@ -14,7 +14,7 @@ import ProjectJoiningPopover from './ProjectJoiningPopover'
 import LeaveProject from './LeaveProject'
 
 
-export default function ProjectHero({data,tasks,u_id}:{data:Project,tasks:Task[],u_id:string}) {
+export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:Task[],u_id:string,p_id:string}) {
   
     const [editingProject,setEditingProject]=useState(false);
     const [deletingProject,setDeletingProject]=useState(false);
@@ -130,7 +130,7 @@ export default function ProjectHero({data,tasks,u_id}:{data:Project,tasks:Task[]
               </div>
             </div>
             <ListTasks tasks={tasks} role={userRole}/>
-            <ListUsers users={data.users} u_id={u_id} u_role={userRole}/>
+            <ListUsers users={data.users} u_id={u_id} u_role={userRole} p_id={p_id}/>
           </div>
         </div>
   )
