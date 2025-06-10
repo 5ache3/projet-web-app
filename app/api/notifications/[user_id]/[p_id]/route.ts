@@ -19,7 +19,6 @@ export async function POST(req: Request,{ params }:{ params: { [key: string]: st
                 proprietaireId: user_id, // optional
                 projetId: p_id, // optional}
         }
-        console.log(data)
         const response = await sendNotifications({data});
 
         return NextResponse.json(response);
