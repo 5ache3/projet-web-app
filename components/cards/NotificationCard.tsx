@@ -1,11 +1,17 @@
-import { Notification } from '@prisma/client'
+import { Notification, Projet } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import GeneralNotifCard from './GeneralNotifCard';
+import RequestNotifCard from './requestNotifCard';
 
-export default function NotificationCard({ notif }: { notif: Notification }) {
+export default function NotificationCard({ notif,project }: { notif: Notification,project?:string}) {
     const [projectName, setProjectName] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
+        if(project){
+            setProjectName(project);
+            setLoading(false);
+            return
+        }
         if (notif.projetId) {
             fetch(`http://localhost:3000/api/projects/${notif.projetId}`)
                 .then(response => response.json())
@@ -34,7 +40,13 @@ export default function NotificationCard({ notif }: { notif: Notification }) {
                 </div>
                 <span className="text-xs text-gray-500">{new Date(notif.dateEnvoi).toLocaleDateString()} {new Date(notif.dateEnvoi).toLocaleTimeString()}</span>
             </div> */}
-            <GeneralNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} />
+            {notif.notificationType=='GENERAL'&&(
+                <GeneralNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} />
+            )}
+            {notif.notificationType=='REQUEST'&&(
+                <RequestNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} sender_id={notif.proprietaireId} state={notif.requestStatus} u_id={notif.destinataireId} p_id={notif.projetId}/>
+            )}
+
         </div>
     )
 }

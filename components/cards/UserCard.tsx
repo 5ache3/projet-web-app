@@ -33,16 +33,18 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
         toast.error(`error`)
         return
       }
-      const message_response = await fetch(`/api/notifications/${u_id}/${p_id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: message, destinataireId: user.id, title: `you have been removed` }),
-      });
-      if (!message_response.ok) {
-        toast.error(`error`)
-        return
+      if(response.ok){
+        const message_response = await fetch(`/api/notifications/user/${u_id}/${p_id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message: message, destinataireId: user.id, title: `you have been removed` }),
+        });
+        if (!message_response.ok) {
+          toast.error(`error`)
+          return
+        }
       }
 
       toast.success("deleted")

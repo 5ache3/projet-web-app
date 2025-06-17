@@ -11,7 +11,7 @@ export default function NotifficationsList({ u_id }: { u_id: string }) {
     useEffect(() => {
         async function fetchNotifications() {
             try {
-                const response = await fetch(`http://localhost:3000/api/notifications/${u_id}`);
+                const response = await fetch(`http://localhost:3000/api/notifications/user/${u_id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch notifications');
                 }

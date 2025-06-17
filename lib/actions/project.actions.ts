@@ -1,4 +1,4 @@
-import { id } from 'date-fns/locale'
+import { da, id } from 'date-fns/locale'
 import prisma from '../prisma'
 import { Prisma, Projet } from '@prisma/client'
 
@@ -181,4 +181,31 @@ export async function markNotificationAsRead({ id }: { id: string }) {
     } catch (error) {
         console.log(error)
     }
+}
+
+export async function requestToJoin({ u_id,p_id }: {u_id:string,p_id:string }) {
+    try {
+        const admin = await prisma.user_Project.findFirst({
+            where: { project_id: p_id, role: 'creator' }
+        })
+        if(!admin){
+            return 
+        }
+        
+        const response = await prisma.notification.create({
+            data:{
+                title:'request to join',
+                message:'',
+                notificationType:'REQUEST',
+                projetId:p_id,
+                proprietaireId:u_id,
+                destinataireId:admin.user_id,
+                requestStatus:'PENDING'
+        }
+        })
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+
 }

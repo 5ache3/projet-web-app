@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { LogOut, Pen,Share2, Trash } from 'lucide-react'
+import { BellDot, LogOut, Pen,Share2, Trash } from 'lucide-react'
 import ProjectCreation from './ProjectCreation'
 import ListTasks from '../tasks/ListTasks'
 import ShareProject from './ShareProject'
@@ -12,11 +12,13 @@ import { Project, Task } from '@/constants/types'
 import ListUsers from './ListUsers'
 import ProjectJoiningPopover from './ProjectJoiningPopover'
 import LeaveProject from './LeaveProject'
+import RequestedJoin from '@/components/lists/RequestedJoin'
 
 
 export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:Task[],u_id:string,p_id:string}) {
   
     const [editingProject,setEditingProject]=useState(false);
+    const [requestsDialog,setrequestsDialog]=useState(false);
     const [deletingProject,setDeletingProject]=useState(false);
     const [sharingProject,setSharingProject]=useState(false);
     const [leavingProject,setLeavingProject]=useState(false);
@@ -44,6 +46,12 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
           <div className='m-1 w-full flex justify-between'>
             <div></div>
             <div className='text-gray-1 flex gap-5'>
+              {userRole=='creator'&&(
+                <div className='p-2 flex flex-col gap-3 rounded-xl' onClick={()=>{setrequestsDialog(true)}}>
+                  <BellDot/>
+                </div>
+              )}
+
               {userRole&&(
               <Popover>
                 <PopoverTrigger asChild>
@@ -79,7 +87,15 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
                 </PopoverContent>
               </Popover>
               )}
+              
               <div>
+                <RequestedJoin 
+                isOpen={requestsDialog} 
+                onClose={()=>{setrequestsDialog(false)}}
+                u_id={u_id}
+                p_id={p_id}
+                title={data.p.title}
+                />
                 <ProjectJoiningPopover
                   isOpen={!isProjectJoined}
                   project_id={data.p.id}

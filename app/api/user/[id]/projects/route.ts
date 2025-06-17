@@ -1,4 +1,4 @@
-import { createRelation, deleteProject, deleteProjectUserRelation, findProject, findRelation, GetListProjects, getProject } from "@/lib/actions/project.actions";
+import { createRelation, deleteProject, deleteProjectUserRelation, findProject, findRelation, GetListProjects, getProject, requestToJoin } from "@/lib/actions/project.actions";
 
 import { NextResponse } from "next/server";
 
@@ -26,8 +26,10 @@ export async function POST(req: Request) {
         if(relation.length>0){
             return NextResponse.json({error:'exist'},{status:403})
         }else{
-            const data = createRelation({u_id:user_id,p_id:project_id,role:"regular"})
+            const data = requestToJoin({u_id:user_id,p_id:project_id})
             return NextResponse.json(data);
+            // const data = createRelation({u_id:user_id,p_id:project_id,role:"regular"})
+            // return NextResponse.json(data);
         }
     }catch(error){
         console.log(error)
