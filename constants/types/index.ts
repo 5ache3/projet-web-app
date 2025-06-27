@@ -25,9 +25,9 @@ type User={
 type Task={
     id: string,
     title: string,
-    project_id: string,
+    projectId: string,
     description: string,
-    created_at: Date,
+    createdAt: Date,
     completed: boolean
   }
 export type {Project,Task,User}

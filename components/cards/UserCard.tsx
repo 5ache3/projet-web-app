@@ -18,11 +18,11 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
 
   const cickUser = async () => {
     const data = {
-      project_id: p_id,
-      user_id: user.id
+      projectId: p_id,
+      userId: user.id
     }
     try {
-      const response = await fetch(`/api/user/${user.id}/projects`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/removeMember`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -34,17 +34,17 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
         return
       }
       if(response.ok){
-        const message_response = await fetch(`/api/notifications/user/${u_id}/${p_id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ message: message, destinataireId: user.id, title: `you have been removed` }),
-        });
-        if (!message_response.ok) {
-          toast.error(`error`)
-          return
-        }
+        // const message_response = await fetch(`/api/notifications/user/${u_id}/${p_id}`, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({ message: message, destinataireId: user.id, title: `you have been removed` }),
+        // });
+        // if (!message_response.ok) {
+        //   toast.error(`error`)
+        //   return
+        // }
       }
 
       toast.success("deleted")
@@ -63,8 +63,8 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
         <div className='flex gap-3'>
           <div>
             <Avatar key={user.id} className='w-12 h-12'>
-              <AvatarImage src={user.imageUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${user.name.trim()[0]}`} />
-              <AvatarFallback>{user.name}</AvatarFallback>
+              <AvatarImage src={user.imageUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${user.username.trim()[0]}`} />
+              <AvatarFallback>{user.name||user.username}</AvatarFallback>
             </Avatar>
           </div>
           <div className=''>
@@ -73,7 +73,7 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
           </div>
         </div>
         <div>
-          {u_role === 'creator' && (
+          {u_role === 'owner' && (
             <Popover>
               <PopoverTrigger asChild>
                 <Image className='cursor-pointer'

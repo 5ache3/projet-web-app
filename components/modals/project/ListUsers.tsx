@@ -14,7 +14,7 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u
       const results = await Promise.all(
         users.map(async (user) => {
           try {
-            const res = await fetch(`/api/user/${user.id}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/user/${user.id}/info`);
             return await res.json();
           } catch (e) {
             console.error('Error fetching user:', e);
@@ -39,7 +39,7 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u
               `https://api.dicebear.com/7.x/initials/svg?seed=${user.username.trim()[0]}`
             }
           />
-          <AvatarFallback>{user.name||user.name}</AvatarFallback>
+          <AvatarFallback>{user.name||user.username}</AvatarFallback>
         </Avatar>
       ))}
       {(usersData&&usersData.length>0)&&(

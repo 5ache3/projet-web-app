@@ -16,11 +16,11 @@ export default function LeaveProject(
     const leaveProject = async ()=>{
         onClose();
         const data={
-            project_id:project_id,
-            user_id:u_id
+            projectId:project_id,
+            userId:u_id
         }
             try{
-            const response = await fetch(`/api/user/${u_id}/projects`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/removeMember`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

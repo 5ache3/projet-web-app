@@ -50,12 +50,12 @@ export default function ListTasks({tasks,role}:{tasks:Task[],role:string}) {
             deleteFromList(index)
             const task=tasks_list[index]
             const data={task_id:task.id}
-            const response = await fetch(`/api/projects/${task.project_id}/tasks/${task.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/tasks/delete`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(task.id),
             });
             if(response.ok){
                 toast.success("task deleted")

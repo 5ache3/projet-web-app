@@ -22,14 +22,14 @@ export default async function page({ params }: { params: { id: string } }) {
 
   if (data) {
     return  data ? (
-                  <section>
-                    <ProjectHero
-                      data={data}
-                      tasks={data.tasks || []} 
-                      u_id={u_id}
-                      p_id={id}
-                    />
-                  </section>
+    <section>
+      <ProjectHero
+        data={data}
+        tasks={data.tasks || []} 
+        u_id={u_id}
+        p_id={id}
+      />
+    </section>
 
     ):<></>
   }

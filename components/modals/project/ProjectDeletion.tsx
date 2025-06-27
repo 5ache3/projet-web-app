@@ -42,12 +42,12 @@ export default function ProjectDeletion({isOpen,p_id,
                 user_id:u_id
               }
               
-            const response = await fetch(`/api/user/${u_id}/projects`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/deleteById`, {
                 method: "DELETE",
                 headers: {
                 "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(p_id),
             });
             console.log(response)
             if(response.ok){

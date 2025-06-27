@@ -20,11 +20,11 @@ export default function ProjectSearch({isOpen,onClose,closeDialog,handleClick}:p
         closeDialog();
         
         const data={
-            project_id:projectId,
-            user_id:id
+            projectId:projectId,
+            userId:id
         }
          try{
-            const response = await fetch(`/api/user/${id}/projects`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/addMember`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

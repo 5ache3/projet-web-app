@@ -32,13 +32,13 @@ export default function TasktCompletion({
             const data= {
                 id:task.id,
                 title:task.title,
-                project_id:task.project_id,
+                projectId:task.projectId,
                 description:task.description,
-                created_at:task.created_at,
-                completed:true
+                createdAt:task.createdAt,
+                completed:!task.completed
               }
               
-            const response = await fetch(`/api/projects/${task.project_id}/tasks/${task.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/tasks/${task.id}/update`, {
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json",

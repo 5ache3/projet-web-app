@@ -30,11 +30,11 @@ export default function TasktCreation({isOpen,onClose,handleCreation,closeDialog
         try {
             const data= {
               title: name,
-              project_id: id, 
+              projectId: id, 
               description: description || null,
             }
             
-            const response = await fetch(`/api/projects/${id}/tasks`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/${id}/addTask`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function TasktCreation({isOpen,onClose,handleCreation,closeDialog
                 body: JSON.stringify(data),
               });
               const created=await response.json()
-              handleCreation(created)
+              // handleCreation(created)
               
               if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);

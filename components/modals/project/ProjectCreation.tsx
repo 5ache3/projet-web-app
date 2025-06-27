@@ -89,8 +89,8 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
               deadline: date,
             }
             console.log(data)
-            const response = await fetch(`/api/projects/${project_id}`, {
-                method: "POST",
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/${project_id}/edit`, {
+                method: "PUT",
                 headers: {
                   "Content-Type": "application/json",
                 },
