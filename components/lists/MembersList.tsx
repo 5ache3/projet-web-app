@@ -1,7 +1,7 @@
 import React, { use } from 'react'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
-import { User, User_Project } from '@prisma/client';
 import UserCard from '../cards/UserCard';
+import { User } from '@/constants/types';
 
 export default function MembersList({ isOpen, onClose, users, u_id, u_role, p_id }: { isOpen: boolean, onClose: () => void, users: User[], u_id: string, p_id: string, u_role?: string }) {
   return (

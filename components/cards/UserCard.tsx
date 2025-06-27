@@ -1,5 +1,4 @@
 'use client'
-import { User } from '@prisma/client'
 import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import Image from 'next/image'
@@ -10,6 +9,7 @@ import { Checkbox } from '../ui/checkbox'
 import { Button } from '../ui/button'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { User } from '@/constants/types'
 
 export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_id: string, u_role: string | undefined, p_id: string }) {
   const [confirmation, setConfirmation] = useState(false)
@@ -63,7 +63,7 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
         <div className='flex gap-3'>
           <div>
             <Avatar key={user.id} className='w-12 h-12'>
-              <AvatarImage src={user.image_url || `https://api.dicebear.com/7.x/initials/svg?seed=${user.name.trim()[0]}`} />
+              <AvatarImage src={user.imageUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${user.name.trim()[0]}`} />
               <AvatarFallback>{user.name}</AvatarFallback>
             </Avatar>
           </div>

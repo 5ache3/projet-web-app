@@ -2,7 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import MobileNav from './MobileNav'
-import { SignedIn, SignIn, UserButton } from '@clerk/nextjs'
+import SignedIn from './SignedIn'
+import { Avatar } from '../ui/avatar'
+import SignedInUser from './SignedInUser'
 
 export default function Navbar() {
   return (
@@ -22,10 +24,15 @@ export default function Navbar() {
       </Link>
 
       <div className='flex justify-between gap-4'>
-        <SignedIn>
+        {/* <SignedIn>
           <UserButton/>
         </SignedIn>
-        <MobileNav/>
+        */}
+        <SignedIn>
+          <SignedInUser/>
+        </SignedIn>
+        <MobileNav/> 
+
       </div>
     </nav>
   )

@@ -3,36 +3,41 @@ import ProjectCard from '@/components/cards/ProjectCard'
 import ListProjectSkeletons from '@/components/reusable/ListProjectSkeletons';
 import { Calendar } from '@/components/ui/calendar';
 import HomeActions from '@/components/ui/HomeActions'
-import { Project } from '@/constants/types';
-import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-
+import { useSession } from '../../session.context';
+type Project={
+  id:string
+  title:string
+  ownerId:string
+  createdAt:Date
+  description:string
+  deadline:Date
+  t:number
+  c:number
+}
 function page() {
-
-  const { user } = useUser();
-  const id = user?.id;
+  const session=useSession();
+  const id = session.userId;
   const [listProjects, setListProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter()
   const cards = ['card-1', 'card-2', 'card-3', 'card-4',]
   useEffect(() => {
     const fetchProjects = async () => {
-      try {
-        const data = await fetch(`/api/user/${id}/projects`);
-        const projects = await data?.json()
-        if (projects) {
-          const lis = []
-          for (let i = 0; i < 2 && i < projects.length; i++) {
-            lis.push(projects[i])
-          }
-          setListProjects(lis);
-          setLoading(false);
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/user/${id}/projects`);
+            if (response.ok) {
+            const projects = await response.json();
+            setListProjects(projects);
+            } else {
+            setListProjects([]);
+            // console.error("Failed to fetch projects:", response.statusText);
+            }
+        } catch (error) {
+          console.error("Error fetching projects:", error);
         }
-      } catch (error) {
-        console.error("Error fetching projects:", error);
-      }
-    };
+      };
     fetchProjects();
   }, [id]);
   return (
@@ -49,12 +54,12 @@ function page() {
             {listProjects.map((item, index) => (
               <ProjectCard
                 key={index}
-                title={item.p.title}
+                title={item.title}
                 color={cards[index % cards.length]}
                 total={item.t}
                 completed={item.c}
-                date={item.p.deadline}
-                handleClick={() => router.push(`/projects/${item.p.id}`)}
+                date={item.deadline}
+                handleClick={() => router.push(`/projects/${item.id}`)}
               />
             ))}
           </div>

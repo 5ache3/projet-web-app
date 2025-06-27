@@ -10,28 +10,11 @@ type Info={
     username:string
     image:string
 }
-export default function RequestNotifCard({ id, lue, projectName, message, title, dateEnvoi,sender_id,state,u_id,p_id}: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date,sender_id:string,state:RequestStatus|null,u_id:string,p_id:string,}) {
+export default function RequestNotifCard({ id, lue, projectName, message, title, dateEnvoi,sender_id,state,u_id,p_id,index,deletion,changed}: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date,sender_id:string,state:RequestStatus|null,u_id:string,p_id:string|null,index:number,deletion:(index:number)=>void,changed:(index:number,new_t:RequestStatus)=>void}) {
     const [senderInfo,setSenderInfo]=useState<User>()
     const [notifState,setNotifState]=useState(state)
+    const [deleted,setDeleted]=useState(false)
     const [viewed,setViewed]=useState(lue)
-    const deleteNotification = async (notifId: string) => {
-        try {
-            const response = await fetch(`http://localhost:3000/api/notifications/`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: notifId }),
-            });
-            if (!response.ok) {
-                toast.error('Failed to delete notification');
-                throw new Error('Failed to delete notification');
-            }
-            
-        } catch (error) {
-            console.error('Error deleting notification:', error);
-        }
-    };
     useEffect(()=>{
         const getsenderInfo = async ()=>{
             try {
@@ -47,6 +30,27 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
         }
         getsenderInfo();
     },[])
+
+    const deleteNotification = async (notifId: string) => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/notifications/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: notifId }),
+            });
+            if (!response.ok) {
+                toast.error('Failed to delete notification');
+                throw new Error('Failed to delete notification');
+            }
+            setDeleted(true)
+            deletion(index)
+        } catch (error) {
+            console.error('Error deleting notification:', error);
+        }
+    };
+    
 
     const aproveRequest = async()=>{
         try {
@@ -74,6 +78,7 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
                 return
                 }
             }
+        // changed(index,'APPROVED')
         setNotifState('APPROVED')
         setViewed(true)
         } catch (error) {
@@ -106,7 +111,8 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
                 return
                 }
             }
-        setNotifState('REJECTED')
+            // changed(index,'REJECTED')
+            setNotifState('REJECTED')
         setViewed(true)
         } catch (error) {
             console.error('Error deleting notification:', error);

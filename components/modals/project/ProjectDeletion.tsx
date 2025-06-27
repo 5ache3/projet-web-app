@@ -1,8 +1,8 @@
 'use client'
+import { useSession } from '@/app/session.context';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
@@ -23,8 +23,8 @@ export default function ProjectDeletion({isOpen,p_id,
         const router=useRouter()
     const [message,setMessage]=useState('');
     const [checked,setChecked]=useState(false)
-    const { user } = useUser();
-    const u_id=user?.id  
+    const session=useSession();
+    const u_id=session.userId;
     const onSubmit = async () => {
         if(!checked){
             toast.error("please confirm")

@@ -13,8 +13,8 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { sidebarLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
-import { SignOutButton } from '@clerk/nextjs'
-import { SignedIn } from '@clerk/clerk-react'
+import SignedIn from './SignedIn';
+import SignOut from './SignOut';
   
 export default function MobileNav() {
     const pathname=usePathname()
@@ -73,18 +73,17 @@ export default function MobileNav() {
                         </div>
                         <div className='px-4 py-12'>
                             <SignedIn>
-                            <SignOutButton>
-                                <div className='flex cursor-pointer gap-3'>
-                                    <Image
-                                    src={'/assets/logout.svg'}
-                                    alt='logout'
-                                    width={25}
-                                    height={25}
-                                    className='fill-amber-50'
-                                    />
-                                    <p className='font-semibold text-white'>LogOut</p>
-                                </div>
-                            </SignOutButton>
+                                <SignOut>
+                                    <div className='flex cursor-pointer gap-3'>
+                                        <Image
+                                        src={'/assets/logout.svg'}
+                                        alt='logout'
+                                        width={25}
+                                        height={25}
+                                        />
+                                        <p className='font-semibold text-white'>LogOut</p>
+                                    </div>
+                                </SignOut>
                             </SignedIn>
                         </div>
                         </section>

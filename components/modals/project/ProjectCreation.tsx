@@ -4,9 +4,10 @@ import{useState } from 'react'
 import { Dialog, DialogContent, DialogTitle } from '../../ui/dialog'
 import { CalendarForm } from '../../ui/forms/calendarForm'
 import { Button } from '../../ui/button'
-import { useUser } from '@clerk/nextjs'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { randomUUID } from 'crypto'
+import { useSession } from '@/app/session.context'
 interface promps{
     isOpen:boolean
     onClose?:()=>void
@@ -23,8 +24,8 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
     const [name,setName]=useState(Title||'');
     const [description,setDescription]=useState(Description||'');
     const router=useRouter()
-    const { user } = useUser();
-    const id=user?.id ;
+    const session = useSession();
+    const id=session.userId ;
 
     const createProject = async () => {
         closeDialog();
@@ -40,12 +41,12 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
         try {
             const data= {
               title: name,
-              owner_id: id, 
+              ownerId: id, 
               description: description || null,
               deadline: date ? new Date(date) : null,
             }
             
-            const response = await fetch("/api/projects", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

@@ -1,11 +1,12 @@
 'use client'
 import { sidebarLinks } from '@/constants'
 import { cn } from '@/lib/utils'
-import { SignedIn, SignOutButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import SignedIn from './SignedIn'
+import SignOut from './SignOut'
 
 export default function Sidebar() {
     const pathname=usePathname()
@@ -36,17 +37,17 @@ export default function Sidebar() {
         </div>
         <div className='px-4 py-12'>
             <SignedIn>
-            <SignOutButton>
-                <div className='flex cursor-pointer gap-3'>
-                    <Image
-                    src={'/assets/logout.svg'}
-                    alt='logout'
-                    width={25}
-                    height={25}
-                    />
-                    <p className='font-semibold text-white'>LogOut</p>
-                </div>
-            </SignOutButton>
+                <SignOut>
+                    <div className='flex cursor-pointer gap-3'>
+                        <Image
+                        src={'/assets/logout.svg'}
+                        alt='logout'
+                        width={25}
+                        height={25}
+                        />
+                        <p className='font-semibold text-white'>LogOut</p>
+                    </div>
+                </SignOut>
             </SignedIn>
         </div>
     </section>

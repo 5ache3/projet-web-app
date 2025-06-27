@@ -1,7 +1,7 @@
 'use client'
+import { useSession } from '@/app/session.context';
 import { Button } from '@/components/ui/button';
 import { DialogTitle,Dialog, DialogContent } from '@/components/ui/dialog';
-import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'sonner';
@@ -10,9 +10,9 @@ export default function ProjectJoiningPopover(
     {project_id,title,description,isOpen,onClose}
     :{project_id:string,title:string,description:string,isOpen:boolean,onClose:()=>void}) {
 
-    const { user } = useUser();
     const router=useRouter();
-    const u_id=user?.id  
+    const session=useSession();
+    const u_id=session.userId; 
     const joinProject = async ()=>{
         onClose();
         const data={

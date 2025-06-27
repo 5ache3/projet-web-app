@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 // import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Variable } from "lucide-react";
 import { Toaster } from "sonner";
+import { SessionProvider } from "./session.context";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ClerkProvider 
+      {/* <ClerkProvider 
         appearance={{
           layout:{
             logoImageUrl:'assets/logo.svg',
@@ -43,12 +43,17 @@ export default function RootLayout({
             colorInputText:'#fff',
           },
         }}
-      >
-        <body className='dark bg-mainbg-1'>
-          {children}
-          <Toaster></Toaster>
-        </body>
-      </ClerkProvider>
+      > */}
+
+        <SessionProvider>
+          <body className='dark bg-mainbg-1'>
+            {children}
+            <Toaster></Toaster>
+          </body>
+        </SessionProvider>
+
+
+      {/* </ClerkProvider> */}
     </html>
   );
 }

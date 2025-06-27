@@ -1,13 +1,14 @@
+
 import NotifficationsList from '@/components/lists/NotifficationsList'
-import { currentUser } from '@clerk/nextjs/server';
+import { getSession } from '@/lib/session';
 import React from 'react'
 
 export default async function page() {
-  const user = await currentUser();
-  const u_id = user?.id;
+  const session = await getSession();
+  const u_id = session.userId;
   return (
     <div className='text-white'>
-      <NotifficationsList u_id={u_id} />
+      {u_id &&(<NotifficationsList u_id={u_id} />)}
     </div>
   )
 }

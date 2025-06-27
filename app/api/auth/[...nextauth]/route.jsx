@@ -2,7 +2,6 @@ import NextAuth from "next-auth/next";
 import GitHubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import Credentials from "next-auth/providers/credentials";
-import { SignUp } from "@clerk/nextjs";
 export const authOptions={
     providers: [
         GitHubProvider({

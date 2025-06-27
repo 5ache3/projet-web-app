@@ -1,9 +1,9 @@
-import { Notification, Projet } from '@prisma/client'
+import { Notification, Projet, RequestStatus } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import GeneralNotifCard from './GeneralNotifCard';
 import RequestNotifCard from './requestNotifCard';
 
-export default function NotificationCard({ notif,project }: { notif: Notification,project?:string}) {
+export default function NotificationCard({ notif,project,deletion,index,changed}: { notif: Notification,project?:string,index:number,deletion:(index:number)=>void,changed:(index:number,new_t:RequestStatus)=>void}) {
     const [projectName, setProjectName] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
@@ -44,7 +44,7 @@ export default function NotificationCard({ notif,project }: { notif: Notificatio
                 <GeneralNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} />
             )}
             {notif.notificationType=='REQUEST'&&(
-                <RequestNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} sender_id={notif.proprietaireId} state={notif.requestStatus} u_id={notif.destinataireId} p_id={notif.projetId}/>
+                <RequestNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} sender_id={notif.proprietaireId} state={notif.requestStatus} u_id={notif.destinataireId} p_id={notif.projetId} index={index} deletion={deletion} changed={changed}/>
             )}
 
         </div>

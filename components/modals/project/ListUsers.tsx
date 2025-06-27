@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User, User_Project } from '@prisma/client';
+// import { User, User_Project } from '@prisma/client';
 import MembersList from '@/components/lists/MembersList';
+import { User } from '@/constants/types';
 
-export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User_Project[] ,u_id:string,u_role?:string,p_id:string}) {
+export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u_id:string,u_role?:string,p_id:string}) {
   const [usersData, setUsersData] = useState<User[]>([]);
   const [listOpened,openList]=useState(false)
   useEffect(() => {
@@ -13,7 +14,7 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User_Proj
       const results = await Promise.all(
         users.map(async (user) => {
           try {
-            const res = await fetch(`/api/user/${user.user_id}`);
+            const res = await fetch(`/api/user/${user.id}`);
             return await res.json();
           } catch (e) {
             console.error('Error fetching user:', e);
@@ -34,11 +35,11 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User_Proj
         <Avatar key={user.id}>
           <AvatarImage
             src={
-              user.image_url ||
-              `https://api.dicebear.com/7.x/initials/svg?seed=${user.name.trim()[0]}`
+              user.imageUrl ||
+              `https://api.dicebear.com/7.x/initials/svg?seed=${user.username.trim()[0]}`
             }
           />
-          <AvatarFallback>{user.name}</AvatarFallback>
+          <AvatarFallback>{user.name||user.name}</AvatarFallback>
         </Avatar>
       ))}
       {(usersData&&usersData.length>0)&&(

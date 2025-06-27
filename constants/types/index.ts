@@ -3,20 +3,25 @@ import { User_Project } from "@prisma/client"
 
 
 type Project={
-    p:{
-      id:string
-      title:string
-      owner_id:string
-      created_at:Date
-      description:string
-      deadline:Date
-    }
-    t:number
-    c:number
-    tasks:Task[]
-    users:User_Project[]
+  id:string
+  title:string
+  ownerId:string
+  createdAt:Date
+  description:string
+  deadline:Date
+  t:number
+  c:number
+  tasks:Task[]
+  members:User[]
 }
 
+type User={
+  role:string
+      id:string,
+      name:string,
+      username:string
+      imageUrl:string
+}
 type Task={
     id: string,
     title: string,
@@ -25,4 +30,4 @@ type Task={
     created_at: Date,
     completed: boolean
   }
-export type {Project,Task}
+export type {Project,Task,User}

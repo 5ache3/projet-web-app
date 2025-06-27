@@ -1,35 +1,39 @@
 'use client'
+import { useSession } from '@/app/session.context';
 import ProjectCard from '@/components/cards/ProjectCard'
 import ListProjectSkeletons from '@/components/reusable/ListProjectSkeletons';
-import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+
 type project={
-  p:{
-    id:string
-    title:string
-    owner_id:string
-    created_at:Date
-    description:string
-    deadline:Date
-  }
+  id:string
+  title:string
+  ownerId:string
+  createdAt:Date
+  description:string
+  deadline:Date
   t:number
   c:number
 }
 export default function page() {
-    const { user } = useUser();
     const [listProjects, setListProjects] = useState<project[]>([]); 
     const [isLoading,setIsloading]=useState(true)
     const cards=['card-1','card-2','card-3','card-4',]
-    const id = user?.id  ;
-    const router = useRouter()
+    const session=useSession();
+    const id = session.userId;
+    const router = useRouter();
     
     useEffect(() => {
       const fetchProjects = async () => {
         try {
-          const data = await fetch(`/api/user/${id}/projects`);
-          const projects = await data?.json()
-          setListProjects(projects);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/user/${id}/projects`);
+            if (response.ok) {
+            const projects = await response.json();
+            setListProjects(projects);
+            } else {
+            setListProjects([]);
+            // console.error("Failed to fetch projects:", response.statusText);
+            }
           setIsloading(false)
         } catch (error) {
           console.error("Error fetching projects:", error);
@@ -43,15 +47,15 @@ export default function page() {
   return (
     <div className='text-white'>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
-            {listProjects.map((item,index) => (
+            {listProjects&&listProjects.map((item,index) => (
               <ProjectCard 
               key={index}
-              title={item.p.title}
+              title={item.title}
               color={cards[index%cards.length]}
               total={item.t}
               completed={item.c}
-              date={item.p.deadline}
-              handleClick={()=>{router.push(`/projects/${item.p.id}`)}}
+              date={item.deadline}
+              handleClick={()=>{router.push(`/projects/${item.id}`)}}
               />
               
             ))}

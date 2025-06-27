@@ -2,9 +2,9 @@
 import { Dialog, DialogContent, DialogTitle } from '../../ui/dialog'
 import { Button } from '../../ui/button'
 import { Search } from 'lucide-react'
-import { useUser } from '@clerk/nextjs'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { useSession } from '@/app/session.context'
 interface promps{
     isOpen:boolean
     onClose?:()=>void
@@ -12,9 +12,9 @@ interface promps{
     closeDialog:()=>void
 }
 export default function ProjectSearch({isOpen,onClose,closeDialog,handleClick}:promps) {
-    const { user } = useUser();
+    const session=useSession();
+    const id=session.userId;
     const [projectId,setProjectId]=useState('');
-    const id=user?.id ;
 
     const joinProject = async ()=>{
         closeDialog();
