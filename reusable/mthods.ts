@@ -1,0 +1,69 @@
+import { Project } from "@/constants/types";
+
+
+export async function getProjectById(p_id: string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/${p_id}`);
+
+    if (!response.ok) {
+        const errorText = await response.text(); // helpful for debugging
+        console.error("Failed to fetch project:", response.status, errorText);
+        throw new Error(`Failed to fetch project: ${response.status}`);
+    }
+
+    // Check if response body is not empty
+    const text = await response.text();
+    if (!text) {
+        throw new Error("Empty response received from project API.");
+    }
+
+    try {
+        const data = JSON.parse(text);
+        return data;
+    } catch (err) {
+        console.error("Invalid JSON:", text);
+        throw new Error("Invalid JSON from server.");
+    }
+}
+
+
+
+export async function sendNotification({project_id,message,title,type,sender_id,destinateur_id}
+    :{project_id?:string|null,message?:string,title?:string,type:string,sender_id?:string,destinateur_id?:string}){
+    const data={  project_id, message, sender_id, destinateur_id, title, type}
+
+    const message_response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/send`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    });
+
+    return message_response
+}
+
+export async function requestToJoin({u_id,project_id}:{u_id:string,project_id:string}){
+    console.log(project_id)
+    const project:Project = await getProjectById(project_id);
+    console.log(project)
+    return sendNotification({project_id,message:"",title:"request to join",sender_id:u_id,destinateur_id:project.ownerId,type:"REQUEST"})
+}
+
+
+export async function joinProject({projectId,id}:{projectId:string,id:string}){
+    const data={
+            projectId:projectId,
+            userId:id
+        }
+         try{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/addMember`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+        } catch (err) {
+        throw new Error("error ");
+    }
+}

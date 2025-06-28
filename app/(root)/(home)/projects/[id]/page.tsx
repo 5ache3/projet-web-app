@@ -1,6 +1,7 @@
 import ProjectHero from '@/components/modals/project/ProjectHero';
 import { getProject } from '@/lib/actions/project.actions';
 import { getSession } from '@/lib/session';
+import { getProjectById } from '@/reusable/mthods';
 
 
 export default async function page({ params }: { params: { id: string } }) {
@@ -10,10 +11,7 @@ export default async function page({ params }: { params: { id: string } }) {
   const u_id = session?.userId;
   let data;
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/${id}`);
-    // const response = await getProject({id});
-
-    data = await response.json();
+    data = await getProjectById(id);
     
   } catch (error) {
     console.error("Fetch error:", error);

@@ -2,6 +2,7 @@
 import { useSession } from '@/app/session.context';
 import { Button } from '@/components/ui/button';
 import { DialogTitle,Dialog, DialogContent } from '@/components/ui/dialog';
+import { requestToJoin } from '@/reusable/mthods';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'sonner';
@@ -13,6 +14,7 @@ export default function ProjectJoiningPopover(
     const router=useRouter();
     const session=useSession();
     const u_id=session.userId; 
+    if(!u_id){return}
     const joinProject = async ()=>{
         onClose();
         const data={
@@ -20,18 +22,8 @@ export default function ProjectJoiningPopover(
             userId:u_id
         }
             try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/addMember`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-            if(!response.ok){
-                toast.error(`error project not found`)
-                return
-            }
-            toast.success("joined ")
+            const response = requestToJoin({u_id,project_id})
+            toast.success("requested ")
             router.refresh()
         }catch(error){
             if(error){

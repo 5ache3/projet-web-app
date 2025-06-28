@@ -10,6 +10,7 @@ import { Button } from '../ui/button'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { User } from '@/constants/types'
+import { sendNotification } from '@/reusable/mthods'
 
 export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_id: string, u_role: string | undefined, p_id: string }) {
   const [confirmation, setConfirmation] = useState(false)
@@ -33,18 +34,22 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
         toast.error(`error`)
         return
       }
-      if(response.ok){
-        // const message_response = await fetch(`/api/notifications/user/${u_id}/${p_id}`, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({ message: message, destinataireId: user.id, title: `you have been removed` }),
-        // });
-        // if (!message_response.ok) {
-        //   toast.error(`error`)
-        //   return
-        // }
+      
+      if(1){
+        const data={ 
+          project_id:p_id,
+          message: message,
+          sender_id:u_id,
+          destinateur_id: user.id,
+          title: `you have been removed`,
+          type:'GENERAL' 
+        }
+
+        const message_response = await sendNotification(data);
+        if (!message_response.ok) {
+          toast.error(`error`)
+          return
+        }
       }
 
       toast.success("deleted")

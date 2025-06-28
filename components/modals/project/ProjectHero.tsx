@@ -13,6 +13,7 @@ import ListUsers from './ListUsers'
 import ProjectJoiningPopover from './ProjectJoiningPopover'
 import LeaveProject from './LeaveProject'
 import RequestedJoin from '@/components/lists/RequestedJoin'
+import { getProjectById } from '@/reusable/mthods'
 
 
 export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:Task[],u_id:string,p_id:string}) {
@@ -24,7 +25,6 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
     const [leavingProject,setLeavingProject]=useState(false);
     
     const [userRole,setUserRole]=useState('')
-
     const [isProjectJoined,setIsProjectJoined]=useState(userRole.length>0);
     useEffect(()=>{
       const getUserRole = async ()=>{
@@ -47,7 +47,7 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
           <div className='m-1 w-full flex justify-between'>
             <div></div>
             <div className='text-gray-1 flex gap-5'>
-              {userRole=='creator'&&(
+              {userRole=='owner'&&(
                 <div className='p-2 flex flex-col gap-3 rounded-xl' onClick={()=>{setrequestsDialog(true)}}>
                   <BellDot/>
                 </div>
@@ -90,13 +90,13 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
               )}
               
               <div>
-                {/* <RequestedJoin 
+                <RequestedJoin 
                 isOpen={requestsDialog} 
                 onClose={()=>{setrequestsDialog(false)}}
                 u_id={u_id}
                 p_id={p_id}
                 title={data.title}
-                /> */}
+                />
                 <ProjectJoiningPopover
                   isOpen={!isProjectJoined}
                   project_id={data.id}
@@ -140,8 +140,9 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
               <span className='text-gray-1'>Nom: </span>{data?.title}
             </div>
             <div className='flex flex-col '>
-              
-              <span className='text-gray-1'>description: </span>
+              {data.description&&(
+                <span className='text-gray-1'>description: </span>
+              )}
               <div className='mx-4'>
                 {data?.description}
               </div>

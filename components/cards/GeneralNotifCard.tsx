@@ -10,8 +10,9 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
     const router = useRouter()
     const [isOpen, setIsOpen] = React.useState(false);
     const deleteNotification = async (notifId: string) => {
+
         try {
-            const response = await fetch(`http://localhost:3000/api/notifications/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/${id}/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,11 +23,13 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
                 toast.error('Failed to delete notification');
                 throw new Error('Failed to delete notification');
             }
+            toast.success("deleted")
             router.refresh();
         } catch (error) {
             console.error('Error deleting notification:', error);
         }
     };
+    
     const view = async () => {
         if (lue) {
             setIsOpen(true);
@@ -34,8 +37,8 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
         }
         setIsOpen(true);
         try {
-            const response = await fetch(`http://localhost:3000/api/notifications/`, {
-                method: 'PUT',
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/${id}/read`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },

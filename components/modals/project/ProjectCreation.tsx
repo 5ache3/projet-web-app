@@ -82,9 +82,7 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
         }
         try {
             const data= {
-              project_id:project_id,
               title: name,
-              owner_id: id, 
               description: description || null,
               deadline: date,
             }

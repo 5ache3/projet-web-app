@@ -32,7 +32,7 @@ export default function RequestedJoin({isOpen,onClose,u_id,p_id,title}:{isOpen:b
         useEffect(() => {
             async function fetchNotifications() {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/notifications/user/${u_id}/${p_id}`);
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/project/${p_id}/${u_id}`);
                     if (!response.ok) {
                         throw new Error('Failed to fetch notifications');
                     }

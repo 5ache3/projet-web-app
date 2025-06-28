@@ -5,12 +5,13 @@ import { Trash } from 'lucide-react';
 import { toast } from 'sonner';
 import { RequestStatus, User } from '@prisma/client';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { joinProject, sendNotification } from '@/reusable/mthods';
 type Info={
     name?:string
     username:string
     image:string
 }
-export default function RequestNotifCard({ id, lue, projectName, message, title, dateEnvoi,sender_id,state,u_id,p_id,index,deletion,changed}: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date,sender_id:string,state:RequestStatus|null,u_id:string,p_id:string|null,index:number,deletion:(index:number)=>void,changed:(index:number,new_t:RequestStatus)=>void}) {
+export default function RequestNotifCard({ id, lue, projectName, message, title, dateEnvoi,sender_id,state,u_id,p_id,index,deletion,changed}: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date,sender_id:string,state:string|undefined,u_id:string,p_id:string|null,index:number,deletion:(index:number)=>void,changed:(index:number,new_t:RequestStatus)=>void}) {
     const [senderInfo,setSenderInfo]=useState<User>()
     const [notifState,setNotifState]=useState(state)
     const [deleted,setDeleted]=useState(false)
@@ -18,9 +19,9 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
     useEffect(()=>{
         const getsenderInfo = async ()=>{
             try {
-                const response = await fetch(`http://localhost:3000/api/user/${sender_id}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/user/${sender_id}/info`);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch notifications');
+                    throw new Error('Failed to fetch user');
                 }
                 const data = await response.json();
                 setSenderInfo(data);
@@ -33,7 +34,7 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
 
     const deleteNotification = async (notifId: string) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/notifications/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/${notifId}/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,6 +46,7 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
                 throw new Error('Failed to delete notification');
             }
             setDeleted(true)
+            if(deletion)
             deletion(index)
         } catch (error) {
             console.error('Error deleting notification:', error);
@@ -54,32 +56,30 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
 
     const aproveRequest = async()=>{
         try {
-            const response = await fetch(`http://localhost:3000/api/notifications/${id}/aprouve/`, {
-                method: 'PUT',
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/${id}/aprove`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ id: id,u_id:sender_id,p_id}),
             });
-            if (!response.ok) {
-                toast.error('Failed to delete notification');
-                throw new Error('Failed to delete notification');
-            }
+            // if (!response.ok) {
+            //     toast.error('Failed to aprove the request');
+                // throw new Error('Failed to delete notification');
+            // }
+            
             if(response.ok){
-                const message_response = await fetch(`/api/notifications/user/${u_id}/${p_id}`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            },
-                        body: JSON.stringify({ message: '', destinataireId: sender_id, title: `you have been aproved`}),
-                    });
+                const message_response = await sendNotification({project_id:p_id,message:"",title:"you have been aproved",type:"",destinateur_id:sender_id,sender_id:u_id})
                 if (!message_response.ok) {
                 toast.error(`error`)
                 return
                 }
             }
-        // changed(index,'APPROVED')
+        if(p_id){
+            joinProject({projectId:p_id,id:sender_id})
+        }
         setNotifState('APPROVED')
+        // changed(index,'APPROVED')
         setViewed(true)
         } catch (error) {
             console.error('Error deleting notification:', error);
@@ -87,31 +87,24 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
     }
     const rejectRequest = async()=>{
         try {
-            const response = await fetch(`http://localhost:3000/api/notifications/${id}/reject/`, {
-                method: 'PUT',
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/${id}/reject`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ id:  id}),
             });
-            if (!response.ok) {
-                toast.error('Failed to delete notification');
-                throw new Error('Failed to delete notification');
-            }
+            // if (!response.ok) {
+            //     toast.error('Failed to delete notification');
+            //     throw new Error('Failed to delete notification');
+            // }
+
             if(response.ok){
-                const message_response = await fetch(`/api/notifications/user/${u_id}/${p_id}`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            },
-                        body: JSON.stringify({ message: '', destinataireId: sender_id, title: `you have been rejected`}),
-                    });
+                const message_response = await sendNotification({ project_id:p_id,message: '',sender_id:u_id,destinateur_id: sender_id,title: `you have been rejected`,type:'GENERAL' })
                 if (!message_response.ok) {
-                toast.error(`error`)
                 return
                 }
             }
-            // changed(index,'REJECTED')
             setNotifState('REJECTED')
         setViewed(true)
         } catch (error) {

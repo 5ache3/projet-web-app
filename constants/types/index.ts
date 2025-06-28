@@ -15,6 +15,21 @@ type Project={
   members:User[]
 }
 
+type NotificationType={
+  id : string
+  title:string
+  message:string
+  lue:boolean
+  dateEnvoi:Date
+  notificationType:string
+  requestStatus?:string
+  destinataireId:string
+  proprietaireId:string
+  tacheId:string
+  projectId:string
+
+}
+
 type User={
   role:string
       id:string,
@@ -30,4 +45,4 @@ type Task={
     createdAt: Date,
     completed: boolean
   }
-export type {Project,Task,User}
+export type {Project,Task,User,NotificationType}
