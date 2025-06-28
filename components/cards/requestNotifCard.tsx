@@ -11,7 +11,7 @@ type Info={
     username:string
     image:string
 }
-export default function RequestNotifCard({ id, lue, projectName, message, title, dateEnvoi,sender_id,state,u_id,p_id,index,deletion,changed}: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date,sender_id:string,state:string|undefined,u_id:string,p_id:string|null,index:number,deletion:(index:number)=>void,changed:(index:number,new_t:RequestStatus)=>void}) {
+export default function RequestNotifCard({ id, lue, projectName, message, title, dateEnvoi,sender_id,state,u_id,p_id,index,deletion,changed}: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date,sender_id:string,state:string|undefined,u_id:string,p_id:string|null,index:number,deletion:(index:number)=>void,changed?:(index:number,new_t:RequestStatus)=>void}) {
     const [senderInfo,setSenderInfo]=useState<User>()
     const [notifState,setNotifState]=useState(state)
     const [deleted,setDeleted]=useState(false)
@@ -29,7 +29,7 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
                 console.error(err);
             }
         }
-        getsenderInfo();
+        getsenderInfo(); 
     },[])
 
     const deleteNotification = async (notifId: string) => {
@@ -79,7 +79,8 @@ export default function RequestNotifCard({ id, lue, projectName, message, title,
             joinProject({projectId:p_id,id:sender_id})
         }
         setNotifState('APPROVED')
-        // changed(index,'APPROVED')
+        if(changed)
+        changed(index,'APPROVED')
         setViewed(true)
         } catch (error) {
             console.error('Error deleting notification:', error);

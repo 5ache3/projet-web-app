@@ -4,7 +4,7 @@ import GeneralNotifCard from './GeneralNotifCard';
 import RequestNotifCard from './requestNotifCard';
 import { NotificationType } from '@/constants/types';
 
-export default function NotificationCard({ notif,project,deletion,index,changed}: { notif: NotificationType,project?:string,index:number,deletion:(index:number)=>void,changed:(index:number,new_t:RequestStatus)=>void}) {
+export default function NotificationCard({ notif,project,deletion,index,changed,viewed}: { notif: NotificationType,project?:string,index:number,deletion:(index:number)=>void,changed?:(index:number,new_t:RequestStatus)=>void,viewed?:(index:number)=>void}) {
     const [projectName, setProjectName] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     useEffect(() => {
@@ -43,10 +43,31 @@ export default function NotificationCard({ notif,project,deletion,index,changed}
                 <span className="text-xs text-gray-500">{new Date(notif.dateEnvoi).toLocaleDateString()} {new Date(notif.dateEnvoi).toLocaleTimeString()}</span>
             </div> */}
             {notif.notificationType=='GENERAL'&&(
-                <GeneralNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} />
+                <GeneralNotifCard 
+                id={notif.id} 
+                dateEnvoi={notif.dateEnvoi} 
+                lue={notif.lue} 
+                message={notif.message} 
+                title={notif.title} 
+                projectName={projectName} 
+                index={index} 
+                deletion={deletion} 
+                viewed={viewed}/>
             )}
             {notif.notificationType=='REQUEST'&&(
-                <RequestNotifCard id={notif.id} dateEnvoi={notif.dateEnvoi} lue={notif.lue} message={notif.message} title={notif.title} projectName={projectName} sender_id={notif.proprietaireId} state={notif.requestStatus} u_id={notif.destinataireId} p_id={notif.projectId} index={index} deletion={deletion} changed={changed}/>
+                <RequestNotifCard id={notif.id} 
+                dateEnvoi={notif.dateEnvoi} 
+                lue={notif.lue} 
+                message={notif.message} 
+                title={notif.title} 
+                projectName={projectName} 
+                sender_id={notif.proprietaireId} 
+                state={notif.requestStatus} 
+                u_id={notif.destinataireId} 
+                p_id={notif.projectId} 
+                index={index} 
+                deletion={deletion} 
+                changed={changed}/>
             )}
 
         </div>

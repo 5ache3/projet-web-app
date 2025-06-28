@@ -5,8 +5,9 @@ import { Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
+import { RequestStatus } from '@prisma/client'
 
-export default function GeneralNotifCard({ id, lue, projectName, message, title, dateEnvoi }: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date }) {
+export default function GeneralNotifCard({ id, lue, projectName, message, title, dateEnvoi,index,deletion,viewed }: { id: string, lue: boolean, projectName: string | null, message: string, title: string, dateEnvoi: Date ,index:number,deletion:(index:number)=>void,viewed?:(index:number)=>void}) {
     const router = useRouter()
     const [isOpen, setIsOpen] = React.useState(false);
     const deleteNotification = async (notifId: string) => {
@@ -24,6 +25,7 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
                 throw new Error('Failed to delete notification');
             }
             toast.success("deleted")
+            deletion(index);
             router.refresh();
         } catch (error) {
             console.error('Error deleting notification:', error);
@@ -31,11 +33,18 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
     };
     
     const view = async () => {
-        if (lue) {
+        if(message){
+            if (lue) {
+                setIsOpen(true);
+                if(viewed)
+                viewed(index);
+                return;
+            }
             setIsOpen(true);
-            return;
+            
         }
-        setIsOpen(true);
+        if (viewed)
+        viewed(index)
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/notifications/${id}/read`, {
                 method: 'POST',
