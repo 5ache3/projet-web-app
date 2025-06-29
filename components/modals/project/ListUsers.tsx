@@ -9,6 +9,13 @@ import { User } from '@/constants/types';
 export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u_id:string,u_role?:string,p_id:string}) {
   const [usersData, setUsersData] = useState<User[]>([]);
   const [listOpened,openList]=useState(false)
+  let owner:string='';
+  for(let i=0;i<users.length;i++){
+    if(users[i].role=='omner'){
+      owner=users[i].id;
+      break
+    }
+  }
   useEffect(() => {
     const fetchUsers = async () => {
       const results = await Promise.all(
@@ -59,6 +66,7 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u
       u_id={u_id}
       u_role={u_role}
       p_id={p_id}
+      owner_id={owner}
       />
 
     </div>
