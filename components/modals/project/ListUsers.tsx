@@ -30,7 +30,8 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u
   }, [users]);
 
   return (
-    <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+    <div>
+    <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-1 cursor-pointer w-30 px-2" onClick={()=>{openList(true)}}>
       {usersData.slice(0, 3).map((user) => (
         <Avatar key={user.id}>
           <AvatarImage
@@ -42,16 +43,15 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u
           <AvatarFallback>{user.name||user.username}</AvatarFallback>
         </Avatar>
       ))}
-      {(usersData&&usersData.length>0)&&(
-      <Avatar className="relative cursor-pointer" onClick={()=>{openList(true)}}>
-        <AvatarImage
-          src="/icons/add.svg"
-          className="w-full h-full object-cover"
-        />
+      {(usersData&&usersData.length>3)&&(
+      <Avatar className="relative">
+        <div className='bg-blue-800 w-full flex justify-center text-center font-bold'><span className='translate-x-[-2px] translate-y-[2px]'>+{usersData.length-3}</span></div>
         <AvatarFallback>more</AvatarFallback>
       </Avatar>
 
       )}
+    </div>
+    
       <MembersList 
       isOpen={listOpened}
       onClose={()=>{openList(false)}}
@@ -60,6 +60,7 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u
       u_role={u_role}
       p_id={p_id}
       />
+
     </div>
   );
 }

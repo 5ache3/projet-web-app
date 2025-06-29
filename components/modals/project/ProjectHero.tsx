@@ -148,7 +148,9 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
               </div>
             </div>
             <ListTasks tasks={tasks} role={userRole}/>
-            <ListUsers users={data.members} u_id={u_id} u_role={userRole} p_id={p_id}/>
+            {userRole&&(
+              <ListUsers users={data.members} u_id={u_id} u_role={userRole} p_id={p_id}/>
+            )}
           </div>
         </div>
   )

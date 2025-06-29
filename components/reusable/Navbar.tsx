@@ -5,6 +5,7 @@ import MobileNav from './MobileNav'
 import SignedIn from './SignedIn'
 import { Avatar } from '../ui/avatar'
 import SignedInUser from './SignedInUser'
+import { ModeToggle } from '../ui/ModeSwitcher'
 
 export default function Navbar() {
   return (
@@ -28,6 +29,7 @@ export default function Navbar() {
           <UserButton/>
         </SignedIn>
         */}
+        <ModeToggle/>
         <SignedIn>
           <SignedInUser/>
         </SignedIn>

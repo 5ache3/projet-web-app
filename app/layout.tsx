@@ -5,6 +5,7 @@ import "./globals.css";
 import { Variable } from "lucide-react";
 import { Toaster } from "sonner";
 import { SessionProvider } from "./session.context";
+import { ThemeProvider } from "@/components/theme-provider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -27,33 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      {/* <ClerkProvider 
-        appearance={{
-          layout:{
-            logoImageUrl:'assets/logo.svg',
-            socialButtonsVariant:'iconButton',
-            
-          },
-          variables: {
-            colorPrimary: "blue",
-            colorText:'#fff',
-            colorBackground:"#1C1F2E",
-            colorInputBackground:"#252a41",
-            colorInputText:'#fff',
-          },
-        }}
-      > */}
-
+    <html lang="en" suppressHydrationWarning>
+      <body>
         <SessionProvider>
-          <body className='dark bg-mainbg-1'>
+          <ThemeProvider
+            attribute="class"                
+            defaultTheme="system"           
+            enableSystem={true}
+            disableTransitionOnChange={true}
+          >
             {children}
-            <Toaster></Toaster>
-          </body>
+            <Toaster />
+          </ThemeProvider>
         </SessionProvider>
-
-
-      {/* </ClerkProvider> */}
+      </body>
     </html>
   );
 }
