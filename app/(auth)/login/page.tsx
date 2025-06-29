@@ -18,8 +18,8 @@ type LoginData = {
 export default function LoginForm() {
   const router = useRouter()
   const [loginData, setLoginData] = useState<LoginData>({
-    email: "sidi@gmail.com",
-    password: "12",
+    email: "",
+    password: "",
   });
 
   const { setToken,token } = useSession();
@@ -45,7 +45,10 @@ export default function LoginForm() {
         }),
       });
 
-      if (!response.ok) throw  toast.error("invalid credentials");
+      if (!response.ok){
+        const data=await response.json()
+        toast.error(data.error)
+      }
 
       const data = await response.json();
       setToken(data.token);
@@ -53,7 +56,7 @@ export default function LoginForm() {
       toast.success("Logged in successfully!");
       router.push('/')
     } catch (error) {
-      toast.error(`${error}`);
+      // toast.error(`${error}`);
     }
   };
 
@@ -68,16 +71,16 @@ export default function LoginForm() {
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Your email
+                  Your email or username
                 </label>
                 <input
-                  type="email"
+                  type=""
                   name="email"
                   id="email"
                   value={loginData.email}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="name@company.com"
+                  placeholder="username"
                   required
                 />
               </div>
@@ -91,7 +94,7 @@ export default function LoginForm() {
                   id="password"
                   value={loginData.password}
                   onChange={handleChange}
-                  placeholder="••••••••"
+                  placeholder="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   required
                 />

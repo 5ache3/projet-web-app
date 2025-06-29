@@ -47,17 +47,22 @@ export default function UserForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: formData.email,
+          email: formData.email,
           password: formData.password,
         }),
       });
 
-      if (!response.ok) throw new Error("Failed to create user");
-
-      // const result = await response.json();
-      // console.log("User created:", result);
-      toast.success("User created successfully!")
-      router.push('/login')
+      if(response.status==201){
+        const result = await response.json();
+        console.log("User created:", result);
+        toast.success("User created successfully!")
+        router.push(`/Onbording/${result.id}`)
+      }else{
+        if (!response.ok){
+          const data=await response.json()
+          toast.error(data.error)
+        }
+      }
     } catch (error) {
       console.error("Error:", error);
       alert("Something went wrong.");
@@ -84,7 +89,7 @@ export default function UserForm() {
                   value={formData.email}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="name@company.com"
+                  placeholder="email"
                   required
                 />
               </div>
@@ -98,7 +103,7 @@ export default function UserForm() {
                   id="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="••••••••"
+                  placeholder="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   required
                 />
@@ -144,7 +149,7 @@ export default function UserForm() {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700"
+                className="w-full text-black bg-gray-300 hover:bg-primary-700 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700"
               >
                 Create an account
               </button>

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 /* ───────── 1. Public paths ───────── */
-const PUBLIC_PATHS = ["/login", "/register","/Onbording"];
+const PUBLIC_PATHS = ["/login", "/register","/Onbording","/api/upload"];
 
 function isPublicPath(pathname: string) {
   return (
