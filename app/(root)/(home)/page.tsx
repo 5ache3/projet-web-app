@@ -42,17 +42,17 @@ function page() {
     fetchProjects();
   }, []);
   return (
-    <section className='w-full bg-red text-white'>
+    <section className='w-full bg-red text-foreground'>
       <HomeActions />
       <div className='p-3 projects bg-mainbg-1  rounded-2xl flex flex-col gap-6 mt-10'>
-        <h1 className='text-white px-4 text-3xl font-semibold'>Projects</h1>
+        <h1 className='text-foreground px-4 text-3xl font-semibold'>Projects</h1>
 
         {loading ? (<>
           {/* <ListProjectSkeletons nb={2} /> */}
         </>
         ) : (
           <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
-            {listProjects.map((item, index) => (
+            {listProjects.slice(0,2).map((item, index) => (
               <ProjectCard
                 key={index}
                 title={item.title}

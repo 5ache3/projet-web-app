@@ -75,7 +75,6 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
           toast.error("Please enter a project name and deadline.");
           return;
         }
-        // TODO: if the id does not match the owner id this action will be forwarded to the requests
         if (!id) {
           toast.error("You must be logged in.");
           return;
@@ -120,7 +119,7 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Create Project</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-full  text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-full  text-foreground glassmorphism-1'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
@@ -133,7 +132,7 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
                         type='text' 
                         value={name} 
                         onChange={(event)=>{setName(event.target.value)}}
-                        className='bg-white h-13 rounded-xl text-black font-semibold px-4' 
+                        className='bg-mainbg-2 h-13 rounded-xl text-foreground font-semibold px-4' 
                         placeholder='Name' required/>
                     </div>
                     
@@ -143,13 +142,13 @@ export default function ProjectCreation({isOpen,onClose,closeDialog,project_id,T
                         rows={5} 
                         value={description||''} 
                         onChange={(event)=>{setDescription(event.target.value)}}
-                        className='bg-white rounded-xl text-black font-semibold p-4'
+                        className='bg-mainbg-2 rounded-xl text-foreground font-semibold p-4'
                         ></textarea>    
                     </div>
                 <div>
                     <CalendarForm handleChange={(value:Date|undefined)=>{setDate(value)}} date={date}/>
                 </div>
-                <Button className='bg-white text-black font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
+                <Button className='bg-mainbg-1 text-white font-semibold h-10 mt-5 hover:text-lg'>submit</Button>
             </form>
         </DialogContent>
     </Dialog>

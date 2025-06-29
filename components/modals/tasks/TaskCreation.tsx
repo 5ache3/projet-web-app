@@ -60,7 +60,7 @@ export default function TasktCreation({isOpen,onClose,handleCreation,closeDialog
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Add Task</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-full text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-full text-foreground glassmorphism'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
@@ -73,7 +73,7 @@ export default function TasktCreation({isOpen,onClose,handleCreation,closeDialog
                         type='text' 
                         value={name} 
                         onChange={(event)=>{setName(event.target.value)}}
-                        className='bg-white h-13 rounded-xl text-black font-semibold px-4' 
+                        className='bg-mainbg-2 h-13 rounded-xl text-black font-semibold px-4' 
                         placeholder='Name' required/>
                     </div>
                     <div className='flex flex-col gap-2'>
@@ -82,10 +82,10 @@ export default function TasktCreation({isOpen,onClose,handleCreation,closeDialog
                         rows={5} 
                         value={description||''} 
                         onChange={(event)=>{setDescription(event.target.value)}}
-                        className='bg-white rounded-xl text-black font-semibold p-4'
+                        className='bg-mainbg-2 rounded-xl text-black font-semibold p-4'
                         ></textarea>    
                     </div>
-                <Button className='bg-white text-black font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
+                <Button className='bg-mainbg-1 text-white font-semibold h-10 mt-5 hover:text-lg'>submit</Button>
             </form>
         </DialogContent>
     </Dialog>

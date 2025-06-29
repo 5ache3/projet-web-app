@@ -58,6 +58,22 @@
 }
 
 :root {
+  /* Unified color palette for light mode */
+  --color-primary: #4F46E5;
+  --color-secondary: #F59E42;
+  --color-accent: #10B981;
+  --color-bg: #F3F4F6;
+  --color-text: #111827;
+  --mainbtn-1: #1743e2;
+  --mainbg-1:#1743e2;
+  --mainbg-2:#ffffff;
+  --mainbg-3:#cec8c8;
+  --mainnav-1 :#1717ff;
+  --color-gray-1 :#697C89;
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -65,10 +81,6 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -93,16 +105,26 @@
 }
 
 .dark {
+  /* Unified color palette for dark mode */
+  --color-primary: #4F46E5;
+  --color-secondary: #F59E42;
+  --color-accent: #10B981;
+  --color-bg: #18181B;
+  --color-text: #F3F4F6;
+  --mainbg-1 :#161925;
+  --mainbg-2:#1C1F2D;
+  --mainbtn-1: #1743e2;
+  --mainnav:#161925;
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
@@ -125,10 +147,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-.dark{
-  --mainbg-1 :#161925;
-  --mainbg-2:#1C1F2D;
-}
+
 .bottombar {
   @apply fixed bottom-0 z-10 w-full rounded-t-3xl p-4 bg-mainbg-1 sm:px-7 md:hidden;
 }
@@ -146,7 +165,7 @@
   -webkit-backdrop-filter: blur(4px);
 }
 .glassmorphism-1 {
-  background: rgba(255, 255, 255, 0.05);
+  background: hsla(0, 0.00%, 100.00%, 0.05);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
@@ -156,19 +175,16 @@
   -webkit-backdrop-filter: blur(8px);
 }
 .card-1{
-  background-color: #3642eb;
- 
+  background-color: var(--color-primary);
 }
 .card-2{
-  background-color: #e6d711;
-  
+  background-color: var(--color-secondary);
 }
 .card-3{
-  background-color: #c40bc7;
+  background-color: var(--color-accent);
 }
 .card-4{
-  background-color: #d4431f;
-  /* background-color: #16FEE3; */
+  background-color: var(--color-primary);
 }
 .cl-providerIcon__github,.logo-svg{
   filter: invert(1);

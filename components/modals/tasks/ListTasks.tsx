@@ -70,13 +70,12 @@ export default function ListTasks({tasks,role}:{tasks:Task[],role:string}) {
     <>
         <div className='tasks flex flex-col gap-1'>
 
-            <div className='bg-white p-4 px-2 text-black scrolable h-50 w-full flex flex-col gap-3 rounded-md overflow-auto '>
+            <div className='bg-primary p-4 px-2 text-foreground scrolable h-50 w-full flex flex-col gap-3 rounded-md overflow-auto '>
                 {[...tasks_list].map((item,index) => {
                     return (
-                            <div key={index} className='bg-gray-1 p-4 rounded-lg flex justify-between'>
+                            <div key={index} className='bg-secondary p-4 rounded-lg flex justify-between'>
                                 <div className='max-w-50'>
                                 {item.title} 
-
                                 </div>
                                 {role&&(
                                     <div onClick={()=>{SetClicked2(index)}}>
@@ -95,12 +94,12 @@ export default function ListTasks({tasks,role}:{tasks:Task[],role:string}) {
                                             />
                                         </PopoverTrigger>
                                         <PopoverClose>
-                                            <PopoverContent className='p-2 flex flex-col gap-3 bg-gray-100 rounded-xl'>
-                                                <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
+                                            <PopoverContent className='p-2 flex flex-col gap-3 bg-secondary rounded-xl'>
+                                                <div className='cursor-pointer p-1 hover:scale-130 hover:text-gray-1 rounded-full'
                                                 onClick={()=>{SetClicked(index)}}>
                                                     <Pen/>
                                                 </div>
-                                                <div className='cursor-pointer p-1 hover:bg-gray-200 hover:text-gray-1 rounded-full'
+                                                <div className='cursor-pointer p-1 hover:scale-130 hover:text-gray-1 rounded-full'
                                                         onClick={()=>{deleteTask(index)}}>
                                                     <Trash/>
                                                 </div>
@@ -136,7 +135,7 @@ export default function ListTasks({tasks,role}:{tasks:Task[],role:string}) {
 
             <div className='flex gap-2 justify-around w-full'>
                 {role&&(
-                    <Button className='bg-gray-1 cursor-pointer w-50' onClick={()=>{setAddingTask(true)}}><Plus/></Button>
+                    <Button className=' bg-mainbg-1 text-white font-semibold h-10 mt-5 hover:text-lg  cursor-pointer w-50 glassmorphism' onClick={()=>{setAddingTask(true)}}><Plus/></Button>
                 )}
             </div>
         </div>

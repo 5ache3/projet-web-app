@@ -38,7 +38,7 @@ export default function ProjectSearch({isOpen,onClose,closeDialog,handleClick}:p
     return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Search for projects</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-full text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-full text-foreground glassmorphism-1'>
             <form className='flex flex-col gap-4 ' onSubmit={()=>{onSubmit()}}>
                 <div className='project-title-insertion flex flex-col gap-2'>
                     <label>Project ID</label>
@@ -47,7 +47,7 @@ export default function ProjectSearch({isOpen,onClose,closeDialog,handleClick}:p
                     onChange={(event)=>{setProjectId(event.target.value)}}
                     className='bg-white h-13 rounded-xl text-black font-semibold px-4' placeholder='Project id' required/>
                 </div>
-                <Button className='bg-white text-black font-semibold h-10 mt-5 cursor-pointer hover:bg-amber-100'>Join <Search/>
+                <Button className='bg-mainbg-1 text-white font-semibold h-10 mt-5 hover:text-lg'>Join <Search/>
                 </Button>
             </form>
         </DialogContent>

@@ -50,7 +50,7 @@ export default function RequestedJoin({isOpen,onClose,u_id,p_id,title}:{isOpen:b
   return (
         <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>leaving project</DialogTitle>
-        <DialogContent className='flex flex-col p-10 px-10 bg-mainbg-2 w-full text-white h-150 overflow-auto'>
+        <DialogContent className='flex flex-col p-10 px-10 bg-mainbg-2 w-full text-foreground h-150 overflow-auto glassmorphism'>
             {notifications.length==0&&(
                 <div className='flex flex-col h-full justify-center'>
                     <h1 className='text-center font-semibold text-2xl'>No New Notifications</h1>

@@ -66,9 +66,9 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
     };
     return (
         <div >
-            <div onDoubleClick={view} className={`flex items-center justify-between p-4 mb-2 rounded-lg ${lue ? 'bg-gray-200' : 'bg-blue-200'}`}>
+            <div onDoubleClick={view} className={`flex items-center justify-between p-4 mb-2 rounded-lg ${lue ? 'bg-gray-300' : 'bg-blue-300'}`}>
                 <div className="flex items-center">
-                    <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4">
+                    <div className="w-10 h-10 rounded-full bg-blue-500 text-foreground flex items-center justify-center mr-4">
                         <span className="text-lg font-bold">{projectName?.charAt(0).toUpperCase()}</span>
                     </div>
                     <div>
@@ -90,7 +90,7 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
                         <PopoverContent className='flex flex-col gap-3 w-15 bg-gray-100 rounded-xl'>
 
                             {
-                                <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                                <div className='cursor-pointer p-1 hover:bg-gray-1 hover:scale-130 rounded-full'
                                     onClick={() => { deleteNotification(id); /* Replace with actual notification ID */ }}>
                                     <Trash />
                                 </div>
@@ -104,7 +104,7 @@ export default function GeneralNotifCard({ id, lue, projectName, message, title,
             </div>
             <Dialog open={isOpen} onOpenChange={() => { setIsOpen(false) }}>
                 <DialogTitle className='hidden'>leaving project</DialogTitle>
-                <DialogContent className=' m-auto flex flex-col p-3 pt-15 px-10 bg-mainbg-2 w-full text-white overflow-auto '>
+                <DialogContent className=' m-auto flex flex-col p-3 pt-15 px-10 bg-mainbg-2 w-full text-foreground overflow-auto '>
                     <div>{message}</div>
                 </DialogContent>
             </Dialog>

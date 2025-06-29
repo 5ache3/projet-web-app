@@ -33,7 +33,7 @@ export default function ProjectJoiningPopover(
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>join project</DialogTitle>
-        <DialogContent className='flex flex-col p-6 px-10 bg-mainbg-2 w-full text-white'>
+        <DialogContent className='flex flex-col p-6 px-10 bg-mainbg-2 w-full text-foreground glassmorphism'>
             <div className='text-center font-semibold text-sm'>you are not in this project</div>
             <div className='flex flex-col gap-2'>
                 <div className='flex gap-4 text-gray-1'>
@@ -45,7 +45,7 @@ export default function ProjectJoiningPopover(
                 </div>
                 )}
             </div>
-            <Button className='bg-white text-black hover:text-white' onClick={()=>{joinProject()}}>Join project</Button>
+            <Button className='bg-mainbg-1 text-white font-semibold h-10 mt-5 hover:text-lg' onClick={()=>{joinProject()}}>Join project</Button>
         </DialogContent>
     </Dialog>
   )

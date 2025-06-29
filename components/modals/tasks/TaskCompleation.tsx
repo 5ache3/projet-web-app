@@ -61,7 +61,7 @@ export default function TasktCompletion({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Complete Task</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-80 text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-80 text-foreground glassmorphism'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
@@ -69,8 +69,9 @@ export default function TasktCompletion({
                         }}>
                     <div className='project-title-insertion flex flex-col gap-2'>
                         <div> Name: <span className='text-gray-1'>{task.title}</span></div>
-
-                        <div> Description: <span className='text-gray-1'>{task.description}</span></div>
+                        {task.description&&(
+                            <div> Description: <span className='text-gray-1'>{task.description}</span></div>
+                        )}
                     </div>
                     <div className='flex flex-col gap-2'>
                         <label>Message</label>
@@ -78,11 +79,11 @@ export default function TasktCompletion({
                         rows={2} 
                         value={message||''} 
                         onChange={(event)=>{setMessage(event.target.value)}}
-                        className='bg-white rounded-md text-black font-semibold p-4 text-sm'
+                        className='bg-mainbg-2 rounded-md text-black font-semibold p-4 text-sm'
                         ></textarea> 
                     </div>
                     <Checkbox/>   
-                <Button className='bg-white text-black font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
+                <Button className='bg-mainbg-1 text-black font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
             </form>
         </DialogContent>
     </Dialog>

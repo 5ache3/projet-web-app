@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 import { User } from '@/constants/types'
 import { sendNotification } from '@/reusable/mthods'
 
-export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_id: string, u_role: string | undefined, p_id: string }) {
+export default function UserCard({ user, u_id, p_id,u_role ,isOwner}: { user: User, u_id: string, p_id: string,isOwner:boolean,u_role:string|undefined}) {
   const [confirmation, setConfirmation] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter();
@@ -74,7 +74,7 @@ export default function UserCard({ user, u_id, u_role, p_id }: { user: User, u_i
           </div>
           <div className=''>
             <div className='text-gray-1'>@{user.username}</div>
-            {u_id == user.id && (<div className='font-semibold text-gray-300'>admin</div>)}
+            {isOwner && (<div className='font-semibold text-gray-300'>admin</div>)}
           </div>
         </div>
         <div>

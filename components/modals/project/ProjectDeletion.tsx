@@ -66,7 +66,7 @@ export default function ProjectDeletion({isOpen,p_id,
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogTitle className='hidden'>Delete Project</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-80 text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-80 text-foreground glassmorphism'>
             <form className='flex flex-col gap-4 '
                         onSubmit={(event) => {
                         event.preventDefault();
@@ -84,7 +84,7 @@ export default function ProjectDeletion({isOpen,p_id,
                         className='bg-white rounded-md text-black font-semibold p-4 text-sm'
                         ></textarea> 
                     </div>
-                <Button className='bg-white text-black font-semibold h-10 mt-5 hover:bg-amber-100'>submit</Button>
+                <Button className='bg-mainbg-1 text-white font-semibold h-10 mt-5 hover:text-lg'>submit</Button>
             </form>
         </DialogContent>
     </Dialog>

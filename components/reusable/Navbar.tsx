@@ -9,7 +9,7 @@ import { ModeToggle } from '../ui/ModeSwitcher'
 
 export default function Navbar() {
   return (
-    <nav className='flex justify-between z-50 fixed w-full p-3 bg-mainbg-1  '>
+    <nav className='flex justify-between z-50 fixed w-full p-3 bg-mainbg-1'>
       <Link
       href='/'
       className='flex items-center gap-3'
@@ -21,7 +21,7 @@ export default function Navbar() {
         height={30}
         className='logo-svg'
         />
-        <p className='font-semibold max-xs:hidden text-gray-200'>MyApp</p>
+        <p className='font-semibold max-xs:hidden text-foreground'>MyApp</p>
       </Link>
 
       <div className='flex justify-between gap-4'>

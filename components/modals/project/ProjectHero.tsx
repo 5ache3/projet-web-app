@@ -64,23 +64,23 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
                     />
                 </PopoverTrigger>
 
-                <PopoverContent  className='p-2 flex flex-col gap-3 bg-gray-100 rounded-xl'>
-                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                <PopoverContent  className='p-2 flex flex-col gap-3 bg-mainbg-2 rounded-xl'>
+                  <div className='cursor-pointer p-1 hover:scale-130 rounded-full'
                         onClick={()=>{setEditingProject(true)}}>
                     <Pen/>
                   </div>
-                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                  <div className='cursor-pointer p-1 hover:scale-130 rounded-full'
                           onClick={()=>{setSharingProject(true)}}>
                     <Share2/>
                   </div>
                   {u_id===data.ownerId&&(
-                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                  <div className='cursor-pointer p-1 hover:scale-130 rounded-full'
                           onClick={()=>{setDeletingProject(true)}}>
                     <Trash/>
                   </div>
                   )}
                   {u_id!==data.ownerId&&(
-                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                  <div className='cursor-pointer p-1 hover:scale-130 rounded-full'
                           onClick={()=>{setLeavingProject(true)}}>
                     <LogOut/>
                   </div>
@@ -137,7 +137,7 @@ export default function ProjectHero({data,tasks,u_id,p_id}:{data:Project,tasks:T
           </div>
           <div className='text-white contain  w-full flex flex-col gap-6' >
             <div className='title'>
-              <span className='text-gray-1'>Nom: </span>{data?.title}
+              <span className=''>Nom: </span> {data?.title}
             </div>
             <div className='flex flex-col '>
               {data.description&&(
