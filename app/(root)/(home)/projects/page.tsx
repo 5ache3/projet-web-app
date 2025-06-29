@@ -39,13 +39,19 @@ export default function page() {
           console.error("Error fetching projects:", error);
         }
       };
+      if(id)
       fetchProjects();
-    }, [id]);
+    }, []);
     if(isLoading){
       return (<ListProjectSkeletons nb={3}/>)
     }
   return (
     <div className='text-white'>
+        {listProjects.length==0&&(
+          <div className='flex flex-col h-full justify-center'>
+            <h1 className='text-center font-semibold text-2xl '>No Projects! </h1>
+          </div>
+        )}
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
             {listProjects&&listProjects.map((item,index) => (
               <ProjectCard 

@@ -18,7 +18,7 @@ export default async function page({ params }: { params: { id: string } }) {
     return null;
   }
 
-  if (data) {
+  if (u_id) {
     return  data ? (
     <section>
       <ProjectHero

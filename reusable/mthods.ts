@@ -1,4 +1,5 @@
 import { Project } from "@/constants/types";
+import { toast } from "sonner";
 
 
 export async function getProjectById(p_id: string) {
@@ -25,7 +26,17 @@ export async function getProjectById(p_id: string) {
     }
 }
 
-
+export async function getUsersProjects(u_id:string) {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/user/${u_id}/projects`);
+        if (response.ok) {
+        const projects = await response.json();
+        return projects
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 export async function sendNotification({project_id,message,title,type,sender_id,destinateur_id}
     :{project_id?:string|null,message?:string,title?:string,type:string,sender_id?:string,destinateur_id?:string}){
@@ -43,10 +54,19 @@ export async function sendNotification({project_id,message,title,type,sender_id,
 }
 
 export async function requestToJoin({u_id,project_id}:{u_id:string,project_id:string}){
-    console.log(project_id)
+    const projects:Project[]=await getUsersProjects(u_id);
+    for(let i=0;i<projects.length;i++){
+        if(projects[i].id===project_id){
+            toast.error("user already in the project")
+            return
+        }
+    }
+    
     const project:Project = await getProjectById(project_id);
-    console.log(project)
-    return sendNotification({project_id,message:"",title:"request to join",sender_id:u_id,destinateur_id:project.ownerId,type:"REQUEST"})
+    const response= await sendNotification({project_id,message:"",title:"request to join",sender_id:u_id,destinateur_id:project.ownerId,type:"REQUEST"})
+    if(response.ok){
+        toast.success("requested")
+    }
 }
 
 
@@ -64,6 +84,6 @@ export async function joinProject({projectId,id}:{projectId:string,id:string}){
                 body: JSON.stringify(data),
             });
         } catch (err) {
-        throw new Error("error ");
+        // throw new Error("error ");
     }
 }

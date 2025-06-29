@@ -23,7 +23,6 @@ export default function ProjectJoiningPopover(
         }
             try{
             const response = requestToJoin({u_id,project_id})
-            toast.success("requested ")
             router.refresh()
         }catch(error){
             if(error){

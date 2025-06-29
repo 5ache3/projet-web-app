@@ -5,6 +5,7 @@ import { Search } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { useSession } from '@/app/session.context'
+import { requestToJoin } from '@/reusable/mthods'
 interface promps{
     isOpen:boolean
     onClose?:()=>void
@@ -16,36 +17,21 @@ export default function ProjectSearch({isOpen,onClose,closeDialog,handleClick}:p
     const id=session.userId;
     const [projectId,setProjectId]=useState('');
 
+    
     const joinProject = async ()=>{
-        closeDialog();
-        
-        const data={
-            projectId:projectId,
-            userId:id
-        }
-         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/addMember`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            });
-            if(response.status===403){
-                toast.error("project already joined")
+            if(!id){
+                toast.error("you must be loged in")
                 return
             }
-            if(!response.ok){
-                toast.error(`project not found`)
-                return
-            }
-            toast.success("joined ")
-        }catch(error){
-            if(error){
-                toast.error(`${error}`)
+            closeDialog();
+                try{
+                const response = requestToJoin({u_id:id,project_id:projectId})
+            }catch(error){
+                if(error){
+                    toast.error(`${error}`)
+                }
             }
         }
-    }
     const onSubmit = ()=>{
        joinProject()
     }

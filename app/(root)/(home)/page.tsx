@@ -32,12 +32,13 @@ function page() {
             setListProjects(projects);
             } else {
             setListProjects([]);
-            // console.error("Failed to fetch projects:", response.statusText);
+            setLoading(false)
             }
         } catch (error) {
           console.error("Error fetching projects:", error);
         }
       };
+    if(id)
     fetchProjects();
   }, [id]);
   return (
@@ -47,8 +48,7 @@ function page() {
         <h1 className='text-white px-4 text-3xl font-semibold'>Projects</h1>
 
         {loading ? (
-          // <ListProjectSkeletons nb={2} />
-          <></>
+          <ListProjectSkeletons nb={2} />
         ) : (
           <div className='grid grid-cols-1 gap-4 sm:grid-cols-2  xl:grid-cols-3'>
             {listProjects.map((item, index) => (
