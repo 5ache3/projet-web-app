@@ -63,7 +63,7 @@ export default function UserCard({ user, u_id, p_id,u_role ,isOwner}: { user: Us
     }
   }
   return (
-    <div className='border-gray-100 border-1 rounded-lg p-2 '>
+    <div className='border-gray-100 border-1 rounded-lg p-2 bg-mainbg-1'>
       <div className='flex justify-between'>
         <div className='flex gap-3'>
           <div>
@@ -74,11 +74,11 @@ export default function UserCard({ user, u_id, p_id,u_role ,isOwner}: { user: Us
           </div>
           <div className=''>
             <div className='text-gray-1'>@{user.username}</div>
-            {isOwner && (<div className='font-semibold text-gray-300'>admin</div>)}
+            {isOwner && (<div className='font-semibold text-gray-700'>admin</div>)}
           </div>
         </div>
         <div>
-          {u_role === 'owner' && (
+          {(u_id != user.id) && u_role === 'owner' && (
             <Popover>
               <PopoverTrigger asChild>
                 <Image className='cursor-pointer'
@@ -89,14 +89,12 @@ export default function UserCard({ user, u_id, p_id,u_role ,isOwner}: { user: Us
                 />
               </PopoverTrigger>
 
-              <PopoverContent className='flex flex-col gap-3 bg-gray-100 rounded-xl'>
+              <PopoverContent className='flex flex-col gap-3 rounded-xl w-15 justify-center text-center'>
 
-                {(u_id != user.id) && (
-                  <div className='cursor-pointer p-1 hover:bg-gray-1 hover:text-white rounded-full'
+                  <div className='cursor-pointer hover:bg-gray-1 hover:scale-130 rounded-full m-auto text-foreground'
                     onClick={() => { setConfirmation(true) }}>
                     <Trash />
                   </div>
-                )}
 
               </PopoverContent>
             </Popover>
@@ -107,7 +105,7 @@ export default function UserCard({ user, u_id, p_id,u_role ,isOwner}: { user: Us
 
       <Dialog open={confirmation} onOpenChange={() => { setConfirmation(false) }}>
         <DialogTitle className='hidden'>Complete Task</DialogTitle>
-        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-80 text-white'>
+        <DialogContent className='flex flex-col p-10 bg-mainbg-2 w-80 text-foreground glassmorphism'>
           <form className='flex flex-col gap-4 '
             onSubmit={(event) => {
               event.preventDefault();
@@ -122,10 +120,10 @@ export default function UserCard({ user, u_id, p_id,u_role ,isOwner}: { user: Us
                 rows={2}
                 value={message || ''}
                 onChange={(event) => { setMessage(event.target.value) }}
-                className='bg-white rounded-md text-black font-semibold p-4 text-sm'
+                className='bg--mainbg-2 rounded-md text-black font-semibold p-4 text-sm'
               ></textarea>
             </div>
-            <Button className='bg-white text-black font-semibold h-10 mt-5 hover:bg-amber-100'>confirm</Button>
+            <Button className='bg-mainbg-1 text-black font-semibold h-10 mt-5 hover:text-lg'>confirm</Button>
           </form>
         </DialogContent>
       </Dialog>

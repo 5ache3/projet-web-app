@@ -7,7 +7,7 @@ export default function MembersList({ isOpen, onClose, users, u_id, u_role, p_id
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogTitle className='hidden'>leaving project</DialogTitle>
-      <DialogContent className=' m-auto flex flex-col p-3 pt-15 px-10 bg-mainbg-2 w-full text-white overflow-auto h-100'>
+      <DialogContent className=' m-auto flex flex-col p-3 pt-15 px-10 bg-mainbg-2 w-full text-foreground overflow-auto h-100 glassmorphism'>
         {users.map((user, index) => (
           <UserCard key={index} user={user} u_id={u_id} u_role={u_role} p_id={p_id} isOwner={owner_id==user.id} />
         ))}

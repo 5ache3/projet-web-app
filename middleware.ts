@@ -33,7 +33,7 @@ export function middleware(req: NextRequest) {
 
   /* Public routes always allowed */
   
-  /* Check cookie */
+
   const token = req.cookies.get("auth_token")?.value;
   const payload = parseJwt(token);
   
@@ -48,25 +48,21 @@ export function middleware(req: NextRequest) {
      return NextResponse.redirect(url);
     }
   
-  /* Not logged in → redirect to /login */
   if (!payload) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
-  /* Extra rule: /admin/** requires role=admin */
   if (pathname.startsWith("/admin") && payload.role !== "admin") {
     const url = req.nextUrl.clone();
     url.pathname = "/forbidden";
     return NextResponse.redirect(url);
   }
 
-  /* All good */
   return NextResponse.next();
 }
 
-/* ───────── 4. Matcher ───────── */
 export const config = {
   matcher: [
     "/((?!_next|favicon.ico|.*\\.(?:png|jpg|jpeg|svg|css|js|woff2?|ttf)).*)",
