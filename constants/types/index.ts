@@ -32,10 +32,11 @@ type NotificationType={
 
 type User={
   role:string
-      id:string,
-      name:string,
-      username:string
-      imageUrl:string
+  id:string,
+  name:string,
+  username:string,
+  email:string,
+  imageUrl:string
 }
 type Task={
     id: string,

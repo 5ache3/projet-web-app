@@ -96,13 +96,13 @@ export async function deleteProject(p_id:string,message:string) {
         return NextResponse.json({ message: "Not Found" }, { status: 404 })
     }
     let member;
-    for(let i=0;i<project.members.length;i++){
-        member=project.members[i]
-        if(member.role=='owner'){
-            continue
-        }
-        sendNotification({project_id:project.title,type:"GENERAL",destinateur_id:member.id,sender_id:project.ownerId,message:message,title:"Project was deleted"})
-    }
+    // for(let i=0;i<project.members.length;i++){
+    //     member=project.members[i]
+    //     if(member.role=='owner'){
+    //         continue
+    //     }
+    //     sendNotification({type:"GENERAL",destinateur_id:member.id,sender_id:project.ownerId,message:message,title:"Project was deleted"})
+    // }
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/deleteById`, {
         method: "DELETE",
             headers: {

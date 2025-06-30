@@ -24,7 +24,6 @@ export default function ListUsers({ users ,u_id,u_role,p_id}: { users: User[] ,u
         })
       );
       const validUsers = results.filter(Boolean) as User[];
-      console.table(users)
       for(let i=0;i<users.length;i++){
         if(users[i].role=='owner'){
           setOwner(users[i].id);
