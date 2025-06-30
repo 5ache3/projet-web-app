@@ -22,7 +22,8 @@ export default function NotificationCard({ notif,project,deletion,index,changed,
                     setLoading(false);
                 })
                 .catch(error => {
-                    console.error('Error fetching project name:', error);
+                    setProjectName(notif.projectId)
+                    // console.error('Error fetching project name:', error);
                 });
         }
 

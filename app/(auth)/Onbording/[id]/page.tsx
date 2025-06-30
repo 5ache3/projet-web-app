@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 interface FormData {
   username: string;
   name: string;
-  imageUrl: string; // will hold URL returned by backend after upload
+  imageUrl: string; 
 }
 
 export default function OnboardingForm() {
@@ -95,7 +95,23 @@ export default function OnboardingForm() {
               Complete your profile
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              {/* username */}
+              <div>
+                <label htmlFor="avatar" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Profile picture
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="avatar"
+                  onChange={handleFileChange}
+                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                />
+                {uploading && <p className="text-xs text-gray-500 mt-1">Uploading...</p>}
+                {preview && !uploading && (
+                  <img src={preview} alt="preview" className="mt-2 h-24 w-24 object-cover rounded-full" />
+                )}
+              </div>
+              
               <div>
                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Username
@@ -125,23 +141,7 @@ export default function OnboardingForm() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 />
               </div>
-              {/* image upload */}
-              <div>
-                <label htmlFor="avatar" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Profile picture
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  id="avatar"
-                  onChange={handleFileChange}
-                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                />
-                {uploading && <p className="text-xs text-gray-500 mt-1">Uploading...</p>}
-                {preview && !uploading && (
-                  <img src={preview} alt="preview" className="mt-2 h-24 w-24 object-cover rounded-full" />
-                )}
-              </div>
+              
               <button
                 type="submit"
                 disabled={uploading}

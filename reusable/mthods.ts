@@ -1,4 +1,5 @@
 import { Project } from "@/constants/types";
+import { NextResponse } from "next/server";
 import { toast } from "sonner";
 
 
@@ -86,4 +87,29 @@ export async function joinProject({projectId,id}:{projectId:string,id:string}){
         } catch (err) {
         // throw new Error("error ");
     }
+}
+
+export async function deleteProject(p_id:string,message:string) {
+    // get the project 
+    const project:Project=await getProjectById(p_id);
+    if(!project){
+        return NextResponse.json({ message: "Not Found" }, { status: 404 })
+    }
+    let member;
+    for(let i=0;i<project.members.length;i++){
+        member=project.members[i]
+        if(member.role=='owner'){
+            continue
+        }
+        sendNotification({project_id:project.title,type:"GENERAL",destinateur_id:member.id,sender_id:project.ownerId,message:message,title:"Project was deleted"})
+    }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/deleteById`, {
+        method: "DELETE",
+            headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(p_id),
+    });
+    console.log(response)
+    return response;
 }

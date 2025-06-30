@@ -54,7 +54,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (pathname.startsWith("/admin") && payload.role !== "admin") {
+  if (pathname.startsWith("/dashboard") && payload.role !== "ADMIN") {
     const url = req.nextUrl.clone();
     url.pathname = "/forbidden";
     return NextResponse.redirect(url);

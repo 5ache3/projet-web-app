@@ -3,6 +3,7 @@ import { useSession } from '@/app/session.context';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { deleteProject } from '@/reusable/mthods';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { toast } from 'sonner';
@@ -42,14 +43,7 @@ export default function ProjectDeletion({isOpen,p_id,
                 user_id:u_id
               }
               
-            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_2}/api/projects/deleteById`, {
-                method: "DELETE",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify(p_id),
-            });
-            console.log(response)
+            const response = await deleteProject(p_id,message);
             if(response.ok){
                 toast.success("deleted")
                 handleSubmit()
